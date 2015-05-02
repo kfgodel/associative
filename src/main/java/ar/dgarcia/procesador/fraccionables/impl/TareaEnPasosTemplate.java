@@ -15,7 +15,6 @@ package ar.dgarcia.procesador.fraccionables.impl;
 import ar.com.kfgodel.diamond.api.Diamond;
 import ar.com.kfgodel.diamond.api.methods.TypeMethod;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedMap;
@@ -53,7 +52,7 @@ public class TareaEnPasosTemplate<R> extends TareaEnPasosSupport<R> {
                 .iterator();
         final SortedMap<Integer, TareaPorReflection<R>> tareasPorOrden = new TreeMap<>();
 		while (metodosAnotados.hasNext()) {
-			final Method metodo = metodosAnotados.next().nativeType().get();
+			final TypeMethod metodo = metodosAnotados.next();
 			final TareaPorReflection<R> subtarea = crearTareaDesdeMetodo(metodo);
 			final Integer orden = subtarea.getOrden();
 			// Chequeo por posible error de config
@@ -74,10 +73,12 @@ public class TareaEnPasosTemplate<R> extends TareaEnPasosSupport<R> {
 	 *            El método que será invocado por la tarea
 	 * @return La tarea creada para invocarla
 	 */
-	private TareaPorReflection<R> crearTareaDesdeMetodo(final Method metodo) {
+	private TareaPorReflection<R> crearTareaDesdeMetodo(final TypeMethod metodo) {
 		final TareaPorReflection<R> tarea = TareaPorReflection.create(metodo, this);
 
-		final MetodoComoSubtarea annotation = metodo.getAnnotation(MetodoComoSubtarea.class);
+		final MetodoComoSubtarea annotation = (MetodoComoSubtarea) metodo.annotations()
+                .filter(MetodoComoSubtarea.class::isInstance)
+                .findFirst().get();
 		final int orden = annotation.orden();
 		tarea.setOrden(orden);
 		return tarea;

@@ -12,15 +12,19 @@
  */
 package ar.dgarcia.procesador.fraccionables.impl;
 
+import ar.com.kfgodel.diamond.api.Diamond;
+import ar.com.kfgodel.diamond.api.exceptions.DiamondException;
+import ar.com.kfgodel.diamond.api.methods.TypeMethod;
+import ar.com.kfgodel.diamond.api.types.TypeInstance;
+import ar.com.kfgodel.tostring.ImplementedWithStringer;
 import ar.com.kfgodel.tostring.Stringer;
 import ar.dgarcia.procesador.fraccionables.api.ProcesadorDeTareasParticionables;
 import ar.dgarcia.procesador.fraccionables.api.ResultadoIterativo;
 import ar.dgarcia.procesador.fraccionables.api.TareaConPadre;
 import ar.dgarcia.procesador.fraccionables.api.TareaParticionable;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,7 +38,7 @@ public class TareaPorReflection<R> extends TareaParticionableSupport<R> implemen
 	private Integer orden;
 	public static final String orden_FIELD = "orden";
 
-	private Method metodo;
+	private TypeMethod metodo;
 	public static final String metodo_FIELD = "metodo";
 
 	private Object instancia;
@@ -77,22 +81,12 @@ public class TareaPorReflection<R> extends TareaParticionableSupport<R> implemen
 	@SuppressWarnings("unchecked")
 	private R invocarMetodo(final ProcesadorDeTareasParticionables procesador) {
 		final Object[] argumentos = adaptarArgumentosSegunFirmaDeMetodo(procesador);
-		try {
-			metodo.setAccessible(true);
-			final Object retorno = metodo.invoke(instancia, argumentos);
-			return (R) retorno;
-		} catch (final IllegalAccessException e) {
-			throw new RuntimeException("El metodo no permite acceso", e);
-		} catch (final IllegalArgumentException e) {
-			throw new RuntimeException("Los argumentos pasados no estan bien armados", e);
-		} catch (final InvocationTargetException e) {
-			throw new RuntimeException("Se produjo un error interno en el metodo de una tarea", e);
-		} catch (final NullPointerException e) {
-			throw new RuntimeException("Se paso null como argumento?", e);
-		} catch (final ExceptionInInitializerError e) {
-			throw new RuntimeException(
-					"Se produjo un error en la inicializacion de una clase al invocar un método?", e);
-		}
+		try{
+            final Object retorno = metodo.invokeOn(instancia, argumentos);
+            return (R) retorno;
+        }catch (DiamondException e){
+            throw new RuntimeException("Failed to execute method as task", e);
+        }
 	}
 
 	/**
@@ -104,22 +98,23 @@ public class TareaPorReflection<R> extends TareaParticionableSupport<R> implemen
 	 * @return El array de argumentos
 	 */
 	private Object[] adaptarArgumentosSegunFirmaDeMetodo(final ProcesadorDeTareasParticionables procesador) {
-		final List<Object> argumentosArmados = new ArrayList<>();
-		final Class<?>[] methodArgumentTypes = metodo.getParameterTypes();
-		for (int i = 0; i < methodArgumentTypes.length; i++) {
-			final Class<?> methodArgumentType = methodArgumentTypes[i];
-			if (ProcesadorDeTareasParticionables.class.isAssignableFrom(methodArgumentType)) {
-				// Si quieren un procesador usamos el que nos llama
-				argumentosArmados.add(procesador);
-			} else if (TareaPorReflection.class.isAssignableFrom(methodArgumentType)) {
-				// Si quieren la referencia a la tarea real nos pasamos
-				argumentosArmados.add(this);
-			} else {
-				// Por cualquier otra cosa que quieran, no tenemos nada
-				argumentosArmados.add(null);
-			}
-		}
-		return argumentosArmados.toArray();
+		final List<Object> createdArguments = new ArrayList<>();
+
+		final Iterator<TypeInstance> expectedArgumentTypes = metodo.parameterTypes().iterator();
+        while(expectedArgumentTypes.hasNext()){
+            TypeInstance expectedArgumentType = expectedArgumentTypes.next();
+            if (expectedArgumentType.isAssignableTo(Diamond.of(ProcesadorDeTareasParticionables.class))) {
+                // Si quieren un procesador usamos el que nos llama
+                createdArguments.add(procesador);
+            } else if (expectedArgumentType.isAssignableTo(Diamond.of(TareaPorReflection.class))) {
+                // Si quieren la referencia a la tarea real nos pasamos
+                createdArguments.add(this);
+            } else {
+                // Por cualquier otra cosa que quieran, no tenemos nada
+                createdArguments.add(null);
+            }
+        }
+		return createdArguments.toArray();
 	}
 
 	/**
@@ -138,7 +133,7 @@ public class TareaPorReflection<R> extends TareaParticionableSupport<R> implemen
 		this.tareaPadre = tareaPadre;
 	}
 
-	public static <R> TareaPorReflection<R> create(final Method metodo, final Object instancia) {
+	public static <R> TareaPorReflection<R> create(final TypeMethod metodo, final Object instancia) {
 		final TareaPorReflection<R> tarea = new TareaPorReflection<>();
 		tarea.metodo = metodo;
 		tarea.instancia = instancia;
@@ -149,6 +144,7 @@ public class TareaPorReflection<R> extends TareaParticionableSupport<R> implemen
 	 * @see ar.dgarcia.procesador.fraccionables.impl.TareaParticionableSupport#toString()
 	 */
 	@Override
+    @ImplementedWithStringer
 	public String toString() {
 		return Stringer.representationOf(this);
 	}

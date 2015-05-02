@@ -12,6 +12,7 @@
  */
 package ar.dgarcia.procesador.fraccionables.impl;
 
+import ar.com.kfgodel.tostring.ImplementedWithStringer;
 import ar.com.kfgodel.tostring.Stringer;
 import ar.dgarcia.procesador.fraccionables.api.ProcesadorDeTareasParticionables;
 import ar.dgarcia.procesador.fraccionables.api.TareaConPadre;
@@ -118,6 +119,7 @@ public class TareaEnPasosSupport<R> extends TareaParticionableSupport<R> impleme
 	 * @see ar.dgarcia.procesador.fraccionables.impl.TareaParticionableSupport#toString()
 	 */
 	@Override
+	@ImplementedWithStringer
 	public String toString() {
 		return Stringer.representationOf(this);
 	}

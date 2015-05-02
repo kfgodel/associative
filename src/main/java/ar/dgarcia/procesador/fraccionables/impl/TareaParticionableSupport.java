@@ -12,6 +12,7 @@
  */
 package ar.dgarcia.procesador.fraccionables.impl;
 
+import ar.com.kfgodel.tostring.ImplementedWithStringer;
 import ar.com.kfgodel.tostring.Stringer;
 import ar.dgarcia.procesador.fraccionables.api.ProcesadorDeTareasParticionables;
 import ar.dgarcia.procesador.fraccionables.api.ResultadoIterativo;
@@ -56,6 +57,7 @@ public class TareaParticionableSupport<R> implements TareaParticionable<R> {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
+	@ImplementedWithStringer
 	public String toString() {
 		return Stringer.representationOf(this);
 	}
