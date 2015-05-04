@@ -12,11 +12,11 @@
  */
 package ar.dgarcia.procesador.fraccionables;
 
-import ar.dgarcia.procesador.fraccionables.api.DependenciaCircularException;
-import ar.dgarcia.procesador.fraccionables.api.ProcesadorDeTareasParticionables;
-import ar.dgarcia.procesador.fraccionables.api.ResultadoIterativo;
-import ar.dgarcia.procesador.fraccionables.api.TareaParticionable;
-import ar.dgarcia.procesador.fraccionables.impl.*;
+import ar.com.kfgodel.decomposer.api.DependenciaCircularException;
+import ar.com.kfgodel.decomposer.api.ProcesadorDeTareasParticionables;
+import ar.com.kfgodel.decomposer.api.ResultadoIterativo;
+import ar.com.kfgodel.decomposer.api.TareaParticionable;
+import ar.com.kfgodel.decomposer.impl.*;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;

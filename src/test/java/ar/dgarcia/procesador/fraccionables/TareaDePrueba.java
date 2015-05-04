@@ -13,8 +13,8 @@
 package ar.dgarcia.procesador.fraccionables;
 
 import ar.com.kfgodel.tostring.Stringer;
-import ar.dgarcia.procesador.fraccionables.api.ProcesadorDeTareasParticionables;
-import ar.dgarcia.procesador.fraccionables.impl.TareaParticionableSupport;
+import ar.com.kfgodel.decomposer.api.ProcesadorDeTareasParticionables;
+import ar.com.kfgodel.decomposer.impl.TareaParticionableSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class TareaDePrueba extends TareaParticionableSupport<List<Integer>> {
 	}
 
 	/**
-	 * @see ar.dgarcia.procesador.fraccionables.impl.TareaParticionableSupport#procesar()
+	 * @see TareaParticionableSupport#procesar()
 	 */
 	@Override
 	public void ejecutarCon(final ProcesadorDeTareasParticionables procesador) {
@@ -59,7 +59,7 @@ public class TareaDePrueba extends TareaParticionableSupport<List<Integer>> {
 	}
 
 	/**
-	 * @see ar.dgarcia.procesador.fraccionables.impl.TareaParticionableSupport#toString()
+	 * @see TareaParticionableSupport#toString()
 	 */
 	@Override
 	public String toString() {
