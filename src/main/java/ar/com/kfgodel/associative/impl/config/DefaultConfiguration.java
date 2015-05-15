@@ -4,11 +4,13 @@ import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.InterpretationConfiguration;
 import ar.com.kfgodel.associative.api.config.Interpreter;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
+import ar.com.kfgodel.associative.api.unknown.Uninterpretable;
 import ar.com.kfgodel.associative.impl.analyzer.BoundFieldAnalyzer;
 import ar.com.kfgodel.associative.impl.analyzer.UnknownTypeAnalyzer;
 import ar.com.kfgodel.associative.impl.conditional.ConditionalMap;
 import ar.com.kfgodel.associative.impl.conditional.ConditionalMapImpl;
 import ar.com.kfgodel.associative.impl.inter.ConceptInterpreter;
+import ar.com.kfgodel.associative.impl.inter.UninterpretableIntepreter;
 import ar.com.kfgodel.associative.impl.synthesizer.BoundFieldSynthesizer;
 import ar.com.kfgodel.associative.impl.synthesizer.UnknownTypeSynthesizer;
 import ar.com.kfgodel.diamond.api.fields.BoundField;
@@ -50,6 +52,7 @@ public class DefaultConfiguration implements InterpretationConfiguration {
     }
 
     private void initialize() {
+        this.interpreterConfig.bind(Uninterpretable.class::equals, UninterpretableIntepreter.create());
         this.interpreterConfig.bind(Object.class::isInstance, ConceptInterpreter.create());
 
         this.analyzerConfig.bind(BoundField.class::isInstance, BoundFieldAnalyzer.create());
