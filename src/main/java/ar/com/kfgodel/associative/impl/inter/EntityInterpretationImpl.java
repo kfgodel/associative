@@ -4,6 +4,8 @@ import ar.com.kfgodel.associative.api.EntityInterpretation;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.ObjectInterpretation;
 import ar.com.kfgodel.associative.api.RelationInterpretation;
+import ar.com.kfgodel.associative.impl.maps.EntityMap;
+import ar.com.kfgodel.associative.impl.maps.InterpretationMap;
 import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.Optional;
@@ -12,33 +14,39 @@ import java.util.Optional;
  * Created by kfgodel on 13/05/15.
  */
 public class EntityInterpretationImpl implements EntityInterpretation {
+
+    private EntityMap identities;
+    private InterpretationMap representations;
+
     @Override
-    public Nary<Identity> entities() {
-        return null;
+    public Nary<Identity> identities() {
+        return representations.getIdentities();
     }
 
     @Override
     public Nary<RelationInterpretation> relations() {
-        return null;
+        return representations.getRelations();
     }
 
     @Override
     public Nary<ObjectInterpretation> objects() {
-        return null;
+        return representations.getObjects();
     }
 
     @Override
     public Optional<Identity> identityOf(Object reference) {
-        return null;
+        return identities.getIdentityFor(reference);
     }
 
     @Override
     public <R> Optional<R> representationOf(Identity reference) {
-        return null;
+        return representations.getInterpretationFor(reference);
     }
 
-    public static EntityInterpretationImpl create() {
+    public static EntityInterpretationImpl create(EntityMap identitiesPerEntity, InterpretationMap interpretationPerIdentity) {
         EntityInterpretationImpl interpretation = new EntityInterpretationImpl();
+        interpretation.identities = identitiesPerEntity;
+        interpretation.representations = interpretationPerIdentity;
         return interpretation;
     }
 

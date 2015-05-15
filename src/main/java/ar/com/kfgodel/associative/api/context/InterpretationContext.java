@@ -47,7 +47,7 @@ public interface InterpretationContext {
      * @param entity The entity to fetch its identity in this context
      * @return The given identity
      */
-    Identity getIdentityFor(Object entity);
+    Identity getOrCreateIdentityFor(Object entity);
 
     /**
      * Stores the interpretation created in this context for the given identity
@@ -55,4 +55,11 @@ public interface InterpretationContext {
      * @param entityInterpretation The created interpretation
      */
     void storeInterpretation(Identity entityIdentity, Object entityInterpretation);
+
+    /**
+     * Indicates if the given entity has already been identified in this context
+     * @param entity The entity to check
+     * @return true if there's an entity already in the context, false if it hasn't been identified yet
+     */
+    boolean hasIdentityFor(Object entity);
 }

@@ -51,7 +51,7 @@ public class EntityInterpretationTest extends JavaSpec<AssociativeTestContext> {
                     EntityInterpretation interpretation = context().interpretation();
 
                     // One for each object, one for each relation, one for the unconscious relation type
-                    assertThat(interpretation.entities().count()).isEqualTo(5);
+                    assertThat(interpretation.identities().count()).isEqualTo(5);
 
                     UnObjeto entity = context().entity();
                     Optional<Identity> entityIdentity = interpretation.identityOf(entity);

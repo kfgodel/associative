@@ -3,6 +3,7 @@ package ar.com.kfgodel.associative.impl.synthesizer;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
+import ar.com.kfgodel.associative.impl.model.ObjectInterpretationImpl;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class UnknownTypeSynthesizer implements Synthesizer {
     @Override
     public Object synthesize(List<Identity> partIdentities, InterpretationContext context) {
-        return null;
+        return ObjectInterpretationImpl.create(partIdentities);
     }
 
     public static UnknownTypeSynthesizer create() {

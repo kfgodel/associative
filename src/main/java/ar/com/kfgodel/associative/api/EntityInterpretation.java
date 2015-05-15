@@ -13,7 +13,7 @@ public interface EntityInterpretation {
     /**
      * @return The identified found in the entity (as a whole or as parts)
      */
-    Nary<Identity> entities();
+    Nary<Identity> identities();
 
     /**
      * @return The interpreted relations between identities in the interpreted entity

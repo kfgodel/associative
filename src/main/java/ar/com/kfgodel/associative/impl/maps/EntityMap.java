@@ -12,4 +12,6 @@ public interface EntityMap {
     Optional<Identity> getIdentityFor(Object entity);
 
     void put(Object entity, Identity newIdentity);
+
+    boolean containsIdentityFor(Object entity);
 }

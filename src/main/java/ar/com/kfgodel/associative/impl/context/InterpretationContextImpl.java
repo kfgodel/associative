@@ -51,7 +51,7 @@ public class InterpretationContextImpl implements InterpretationContext {
 
     @Override
     public EntityInterpretation getInterpretation() {
-        return EntityInterpretationImpl.create();
+        return EntityInterpretationImpl.create(identitiesPerEntity, interpretationPerIdentity);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class InterpretationContextImpl implements InterpretationContext {
     }
 
     @Override
-    public Identity getIdentityFor(Object entity) {
+    public Identity getOrCreateIdentityFor(Object entity) {
         Optional<Identity> identity = identitiesPerEntity.getIdentityFor(entity);
         return identity.orElseGet(()->{
             Identity newIdentity = generator.createIdentity();
@@ -79,5 +79,10 @@ public class InterpretationContextImpl implements InterpretationContext {
     @Override
     public void storeInterpretation(Identity entityIdentity, Object entityInterpretation) {
         interpretationPerIdentity.put(entityIdentity, entityInterpretation);
+    }
+
+    @Override
+    public boolean hasIdentityFor(Object entity) {
+        return identitiesPerEntity.containsIdentityFor(entity);
     }
 }

@@ -22,6 +22,11 @@ public class EntityMapImpl implements EntityMap {
         this.identitiesPerEntity.put(entity, newIdentity);
     }
 
+    @Override
+    public boolean containsIdentityFor(Object entity) {
+        return identitiesPerEntity.containsKey(entity);
+    }
+
     public static EntityMapImpl create() {
         EntityMapImpl map = new EntityMapImpl();
         map.identitiesPerEntity = new IdentityHashMap<>();
