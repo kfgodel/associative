@@ -105,12 +105,7 @@ public class EntityInterpretationTest extends JavaSpec<AssociativeTestContext> {
                     assertThat(otroSourcedRelation.origin()).isSameAs(otroIdentity);
                     assertThat(otroSourcedRelation.destination()).isSameAs(entityIdentity);
                 });
-
-
             });
-
-
         });
-
     }
 }
