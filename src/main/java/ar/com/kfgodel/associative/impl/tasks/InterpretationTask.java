@@ -22,9 +22,10 @@ public class InterpretationTask implements DecomposableTask {
     @Override
     public Object executeUnder(DecomposedContext taskContext) {
         InterpretationContext context = InterpretationContextImpl.create(config);
+
         DecomposableTask interpretationProcess = context.getBestInterpretationProcessFor(entity);
         return DelayResult.waitingFor(interpretationProcess)
-                .andFinally(endContext -> context.getInterpretation());
+                .andFinally(endContext -> context.createInterpretation());
     }
 
     public static InterpretationTask create(Object entity, InterpretationConfiguration configuration) {

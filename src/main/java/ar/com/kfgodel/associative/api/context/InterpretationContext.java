@@ -18,7 +18,7 @@ public interface InterpretationContext {
 
     /**
      * Returns the interpretation process that best interprets the given object as a task
-     * that can be executed
+     * that can be executed and whose final result is an identity
      *
      * @param entity The entity to interpret
      * @return The task to do it
@@ -28,7 +28,7 @@ public interface InterpretationContext {
     /**
      * @return The created interpretation of this context
      */
-    EntityInterpretation getInterpretation();
+    EntityInterpretation createInterpretation();
 
     /**
      * Returns the analyzer that best decomposes the given entity into parts

@@ -30,16 +30,17 @@ public class ConceptInterpretationTask implements DecomposableTask {
 
     protected Object analyzeEntity() {
         Analyzer analyzer = getContext().getBestAnalyzerFor(getEntity());
-        Nary<Object> parts = analyzer.analyse(getEntity());
-        List<DecomposableTask> interpretationSubProcesses = parts.map(getContext()::getBestInterpretationProcessFor)
+        Nary<Object> entityParts = analyzer.analyse(getEntity());
+        List<DecomposableTask> partInterpretationProcesses = entityParts
+                .map(getContext()::getBestInterpretationProcessFor)
                 .collect(Collectors.toList());
-        return DelayResult.waitingFor(interpretationSubProcesses)
+        return DelayResult.waitingFor(partInterpretationProcesses)
                 .andFinally(this::makeASynthesis);
     }
 
     private Object makeASynthesis(DecomposedContext decomposedContext) {
-        Synthesizer synthesizer = getContext().getBestSynthesizerFor(getEntity());
         List<Identity> subTaskResults = decomposedContext.getSubTaskResults();
+        Synthesizer synthesizer = getContext().getBestSynthesizerFor(getEntity());
         Object entityInterpretation = synthesizer.synthesize(subTaskResults, getContext());
         getContext().storeInterpretation(entityIdentity, entityInterpretation);
         return entityIdentity;

@@ -41,15 +41,17 @@ public class InterpretationContextImpl implements InterpretationContext {
 
     @Override
     public DecomposableTask getBestInterpretationProcessFor(Object entity) {
-        Optional<Interpreter> foundInterpreter = config.interpreters().getFirstMatchingFor(entity);
-        return foundInterpreter
-                .map((interpreter -> interpreter.describeProcessFor(entity, this)))
-                .orElseThrow(() -> new InterpretationException("There's no suitable interpreter for entity: " + entity));
+        return getBestInterpreterFor(entity).describeProcessFor(entity, this);
     }
 
     @Override
-    public EntityInterpretation getInterpretation() {
+    public EntityInterpretation createInterpretation() {
         return EntityInterpretationImpl.create(identitiesPerEntity, interpretationPerIdentity);
+    }
+
+    private Interpreter getBestInterpreterFor(Object entity) {
+        Optional<Interpreter> interpreter = config.interpreters().getFirstMatchingFor(entity);
+        return interpreter.orElseThrow(() -> new InterpretationException("There's no suitable interpreter for entity: " + entity));
     }
 
     @Override
