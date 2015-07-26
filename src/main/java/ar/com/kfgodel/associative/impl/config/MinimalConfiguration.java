@@ -17,6 +17,6 @@ public class MinimalConfiguration extends ConfigurationSupport {
     @Override
     protected void initialize() {
         super.initialize();
-        this.getInterpreterConfiguration().bind(Object.class::isInstance, UninterpretableIntepreter.create());
+        this.interpreters().bind(Object.class::isInstance, UninterpretableIntepreter.create());
     }
 }

@@ -3,10 +3,13 @@ package ar.com.kfgodel.associative.impl.tasks.helper;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This class implements a recursion cut, that verifies identity in context before continuing execution
+ * This class implements a recursion cut that verifies identity in context before continuing execution.<br>
+ *     If the entity has an indentity in context it uses that, if not it continues the interpretation process.<br>
+ *     This prevents the infinite loop of an entity with references to itself
  * Created by kfgodel on 19/05/2015.
  */
 public class RecursionAvoider {
@@ -20,8 +23,9 @@ public class RecursionAvoider {
      * @return The previous identity, or the result of the action
      */
     public Object executeIfNoPreviousIdentity(Function<Identity, Object> action) {
-        if(context.hasIdentityFor(entity)){
-            // There's another ongoing task who has ownership
+        Optional<Identity> existingIdentity = context.getIdentityFor(entity);
+        if(existingIdentity.isPresent()){
+            // There's another ongoing task who has ownership of the entity
             return context.getOrCreateIdentityFor(entity);
         }
         Identity newIdentity = context.getOrCreateIdentityFor(entity);

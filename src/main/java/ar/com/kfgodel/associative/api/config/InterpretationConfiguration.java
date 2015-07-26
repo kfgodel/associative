@@ -10,16 +10,16 @@ public interface InterpretationConfiguration {
     /**
      * @return The configuration of interpreter per condition
      */
-    ConditionalMap<Object,Interpreter> getInterpreterConfiguration();
+    ConditionalMap<Object,Interpreter> interpreters();
 
     /**
      * @return The configuration of analyzer per condition
      */
-    ConditionalMap<Object, Analyzer> getAnalyzerConfiguration();
+    ConditionalMap<Object, Analyzer> analyzers();
 
     /**
      * @return The configuration of analyzer per condition
      */
-    ConditionalMap<Object, Synthesizer> getSynthesizerConfiguration();
+    ConditionalMap<Object, Synthesizer> synthesizers();
 
 }

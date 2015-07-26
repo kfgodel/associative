@@ -1,6 +1,6 @@
 package ar.com.kfgodel.associative.api.config;
 
-import ar.com.kfgodel.associative.impl.context.InterpretationContextImpl;
+import ar.com.kfgodel.associative.api.context.InterpretationContext;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 
 /**
@@ -17,5 +17,5 @@ public interface Interpreter {
      * @param interpretationContext The context in which to do it
      * @return The task to be executed for its interpretation
      */
-    DecomposableTask describeProcessFor(Object entity, InterpretationContextImpl interpretationContext);
+    DecomposableTask describeProcessFor(Object entity, InterpretationContext interpretationContext);
 }

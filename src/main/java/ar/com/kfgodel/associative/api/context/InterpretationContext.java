@@ -6,6 +6,8 @@ import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 
+import java.util.Optional;
+
 /**
  * This type represents a context in which an interpretation happens and holds references
  * to the involved objects
@@ -21,7 +23,7 @@ public interface InterpretationContext {
      * @param entity The entity to interpret
      * @return The task to do it
      */
-    DecomposableTask getBestProcessFor(Object entity);
+    DecomposableTask getBestInterpretationProcessFor(Object entity);
 
     /**
      * @return The created interpretation of this context
@@ -57,9 +59,9 @@ public interface InterpretationContext {
     void storeInterpretation(Identity entityIdentity, Object entityInterpretation);
 
     /**
-     * Indicates if the given entity has already been identified in this context
-     * @param entity The entity to check
-     * @return true if there's an entity already in the context, false if it hasn't been identified yet
+     * Returns the optional identity for the passed entity (if exists)
+     * @param entity The entity whose identity is requested
+     * @return The optional identity given in this context, or empty if none is found
      */
-    boolean hasIdentityFor(Object entity);
+    Optional<Identity> getIdentityFor(Object entity);
 }

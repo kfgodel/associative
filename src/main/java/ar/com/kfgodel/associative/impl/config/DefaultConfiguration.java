@@ -24,13 +24,13 @@ public class DefaultConfiguration extends ConfigurationSupport {
     @Override
     protected void initialize() {
         super.initialize();
-        this.getInterpreterConfiguration().bind(Uninterpretable.class::equals, UninterpretableIntepreter.create());
-        this.getInterpreterConfiguration().bind(Object.class::isInstance, ConceptInterpreter.create());
+        this.interpreters().bind(Uninterpretable.class::equals, UninterpretableIntepreter.create());
+        this.interpreters().bind(Object.class::isInstance, ConceptInterpreter.create());
 
-        this.getAnalyzerConfiguration().bind(BoundField.class::isInstance, BoundFieldAnalyzer.create());
-        this.getAnalyzerConfiguration().bind(Object.class::isInstance, UnknownTypeAnalyzer.create());
+        this.analyzers().bind(BoundField.class::isInstance, BoundFieldAnalyzer.create());
+        this.analyzers().bind(Object.class::isInstance, UnknownTypeAnalyzer.create());
 
-        this.getSynthesizerConfiguration().bind(BoundField.class::isInstance, BoundFieldSynthesizer.create());
-        this.getSynthesizerConfiguration().bind(Object.class::isInstance, UnknownTypeSynthesizer.create());
+        this.synthesizers().bind(BoundField.class::isInstance, BoundFieldSynthesizer.create());
+        this.synthesizers().bind(Object.class::isInstance, UnknownTypeSynthesizer.create());
     }
 }

@@ -8,8 +8,9 @@ import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
 import ar.com.kfgodel.decomposer.api.results.DelayResult;
 
 /**
- * This type represents the task of interpreting an external entity inside the associative memory
- * to get an entity interpretation
+ * This type represents the task of interpreting an external entity inside the associative memory.
+ * This is the main entry point to the association process generating and interpretation context
+ * that is used on subtasks. The result of this task is an EntityInterpretation
  *
  * Created by kfgodel on 13/05/15.
  */
@@ -21,7 +22,7 @@ public class InterpretationTask implements DecomposableTask {
     @Override
     public Object executeUnder(DecomposedContext taskContext) {
         InterpretationContext context = InterpretationContextImpl.create(config);
-        DecomposableTask interpretationProcess = context.getBestProcessFor(entity);
+        DecomposableTask interpretationProcess = context.getBestInterpretationProcessFor(entity);
         return DelayResult.waitingFor(interpretationProcess)
                 .andFinally(endContext -> context.getInterpretation());
     }

@@ -18,17 +18,17 @@ public class ConfigurationSupport implements InterpretationConfiguration {
     private ConditionalMap<Object,Synthesizer> synthesizerConfig;
 
     @Override
-    public ConditionalMap<Object, Interpreter> getInterpreterConfiguration() {
+    public ConditionalMap<Object, Interpreter> interpreters() {
         return interpreterConfig;
     }
 
     @Override
-    public ConditionalMap<Object, Analyzer> getAnalyzerConfiguration() {
+    public ConditionalMap<Object, Analyzer> analyzers() {
         return analyzerConfig;
     }
 
     @Override
-    public ConditionalMap<Object, Synthesizer> getSynthesizerConfiguration() {
+    public ConditionalMap<Object, Synthesizer> synthesizers() {
         return synthesizerConfig;
     }
 

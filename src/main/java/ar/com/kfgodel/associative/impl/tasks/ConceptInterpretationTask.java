@@ -4,7 +4,6 @@ import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
-import ar.com.kfgodel.associative.impl.context.InterpretationContextImpl;
 import ar.com.kfgodel.associative.impl.tasks.helper.RecursionAvoider;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
@@ -32,7 +31,7 @@ public class ConceptInterpretationTask implements DecomposableTask {
     protected Object analyzeEntity(Identity newIdentity) {
         Analyzer analyzer = getContext().getBestAnalyzerFor(getEntity());
         Nary<Object> parts = analyzer.analyse(getEntity());
-        List<DecomposableTask> interpretationSubProcesses = parts.map(getContext()::getBestProcessFor)
+        List<DecomposableTask> interpretationSubProcesses = parts.map(getContext()::getBestInterpretationProcessFor)
                 .collect(Collectors.toList());
         return DelayResult.waitingFor(interpretationSubProcesses)
                 .andFinally(this::makeASynthesis);
@@ -55,7 +54,7 @@ public class ConceptInterpretationTask implements DecomposableTask {
         return context;
     }
 
-    public static ConceptInterpretationTask create(Object entity, InterpretationContextImpl interpretationContext) {
+    public static ConceptInterpretationTask create(Object entity, InterpretationContext interpretationContext) {
         ConceptInterpretationTask task = new ConceptInterpretationTask();
         task.entity = entity;
         task.context = interpretationContext;

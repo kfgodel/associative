@@ -8,7 +8,6 @@ import ar.com.kfgodel.associative.api.config.Interpreter;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
 import ar.com.kfgodel.associative.api.exceptions.InterpretationException;
-import ar.com.kfgodel.associative.impl.conditional.ConditionalMap;
 import ar.com.kfgodel.associative.impl.generator.IdentityGenerator;
 import ar.com.kfgodel.associative.impl.generator.IdentityGeneratorImpl;
 import ar.com.kfgodel.associative.impl.inter.EntityInterpretationImpl;
@@ -41,9 +40,8 @@ public class InterpretationContextImpl implements InterpretationContext {
     }
 
     @Override
-    public DecomposableTask getBestProcessFor(Object entity) {
-        ConditionalMap<Object, Interpreter> interpreterConfig = config.getInterpreterConfiguration();
-        Optional<Interpreter> foundInterpreter = interpreterConfig.getValueFor(entity);
+    public DecomposableTask getBestInterpretationProcessFor(Object entity) {
+        Optional<Interpreter> foundInterpreter = config.interpreters().getFirstMatchingFor(entity);
         return foundInterpreter
                 .map((interpreter -> interpreter.describeProcessFor(entity, this)))
                 .orElseThrow(() -> new InterpretationException("There's no suitable interpreter for entity: " + entity));
@@ -56,24 +54,24 @@ public class InterpretationContextImpl implements InterpretationContext {
 
     @Override
     public Analyzer getBestAnalyzerFor(Object entity) {
-        Optional<Analyzer> analyzer = config.getAnalyzerConfiguration().getValueFor(entity);
+        Optional<Analyzer> analyzer = config.analyzers().getFirstMatchingFor(entity);
         return analyzer.orElseThrow(()-> new InterpretationException("There's no suitable analyzer for entity: " + entity));
     }
 
     @Override
     public Synthesizer getBestSynthesizerFor(Object entity) {
-        Optional<Synthesizer> synthesizer = config.getSynthesizerConfiguration().getValueFor(entity);
+        Optional<Synthesizer> synthesizer = config.synthesizers().getFirstMatchingFor(entity);
         return synthesizer.orElseThrow(()-> new InterpretationException("There's no suitable synthesizer for entity: " + entity));
     }
 
     @Override
     public Identity getOrCreateIdentityFor(Object entity) {
-        Optional<Identity> identity = identitiesPerEntity.getIdentityFor(entity);
-        return identity.orElseGet(()->{
-            Identity newIdentity = generator.createIdentity();
-            identitiesPerEntity.put(entity, newIdentity);
-            return newIdentity;
-        });
+        return getIdentityFor(entity)
+            .orElseGet(()->{
+                Identity newIdentity = generator.createIdentity();
+                identitiesPerEntity.put(entity, newIdentity);
+                return newIdentity;
+            });
     }
 
     @Override
@@ -82,7 +80,8 @@ public class InterpretationContextImpl implements InterpretationContext {
     }
 
     @Override
-    public boolean hasIdentityFor(Object entity) {
-        return identitiesPerEntity.containsIdentityFor(entity);
+    public Optional<Identity> getIdentityFor(Object entity) {
+        return identitiesPerEntity.getIdentityFor(entity);
     }
+
 }

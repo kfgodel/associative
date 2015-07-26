@@ -15,10 +15,10 @@ public class ConditionalMapImpl<K,V> implements ConditionalMap<K,V> {
     private LinkedHashMap<Predicate<K>, Optional<V>> bindings;
 
     @Override
-    public Optional<V> getValueFor(K key) {
+    public Optional<V> getFirstMatchingFor(K tested) {
         Set<Map.Entry<Predicate<K>, Optional<V>>> entries = bindings.entrySet();
         for (Map.Entry<Predicate<K>, Optional<V>> entry : entries) {
-            if(entry.getKey().test(key)){
+            if(entry.getKey().test(tested)){
                 return entry.getValue();
             }
         }
