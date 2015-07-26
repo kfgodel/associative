@@ -61,17 +61,20 @@ public class InterpretationContextImpl implements InterpretationContext {
     @Override
     public Synthesizer getBestSynthesizerFor(Object entity) {
         Optional<Synthesizer> synthesizer = config.synthesizers().getFirstMatchingFor(entity);
-        return synthesizer.orElseThrow(()-> new InterpretationException("There's no suitable synthesizer for entity: " + entity));
+        return synthesizer.orElseThrow(() -> new InterpretationException("There's no suitable synthesizer for entity: " + entity));
     }
 
     @Override
     public Identity getOrCreateIdentityFor(Object entity) {
         return getIdentityFor(entity)
-            .orElseGet(()->{
-                Identity newIdentity = generator.createIdentity();
-                identitiesPerEntity.put(entity, newIdentity);
-                return newIdentity;
-            });
+            .orElseGet(()-> createIdentityFor(entity));
+    }
+
+    @Override
+    public Identity createIdentityFor(Object entity) {
+        Identity newIdentity = generator.createIdentity();
+        identitiesPerEntity.put(entity, newIdentity);
+        return newIdentity;
     }
 
     @Override

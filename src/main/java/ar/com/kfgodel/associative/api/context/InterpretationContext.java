@@ -52,6 +52,13 @@ public interface InterpretationContext {
     Identity getOrCreateIdentityFor(Object entity);
 
     /**
+     * Creates a new identity in this context bound to the given entity
+     * @param entity The entity for which a new identity is going to be generated
+     * @return The assigned identity for the entity in this context
+     */
+    Identity createIdentityFor(Object entity);
+
+    /**
      * Stores the interpretation created in this context for the given identity
      * @param entityIdentity The identity to relate to the interpretation
      * @param entityInterpretation The created interpretation

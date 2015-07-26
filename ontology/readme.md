@@ -62,6 +62,11 @@ types of relations while others are hidden.
 
 The relations are the elements from which objects are made. The object is discovered by its relations.
 
+## Interpretation
+
+It's the process of generating a network of percepts and concepts that are meaningful to a sentient being from an
+entity. This process deconstructs the entity into interpretable parts that form the identity of the entity
+
 
 
 

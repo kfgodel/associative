@@ -4,31 +4,32 @@ import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
-import ar.com.kfgodel.associative.impl.tasks.helper.RecursionAvoider;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
 import ar.com.kfgodel.decomposer.api.results.DelayResult;
 import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * This type represents the task of interpreting a concept
  * Created by kfgodel on 13/05/15.
  */
-public class ConceptInterpretationTask implements DecomposableTask {
+public class ConceptInterpretationTask implements Function<Identity, Object> {
 
+    private Identity entityIdentity;
     private Object entity;
     private InterpretationContext context;
 
     @Override
-    public Object executeUnder(DecomposedContext taskContext) {
-        return RecursionAvoider.create(entity, context)
-                .executeIfNoPreviousIdentity(this::analyzeEntity);
+    public Object apply(Identity identity) {
+        this.entityIdentity = identity;
+        return this.analyzeEntity();
     }
 
-    protected Object analyzeEntity(Identity newIdentity) {
+    protected Object analyzeEntity() {
         Analyzer analyzer = getContext().getBestAnalyzerFor(getEntity());
         Nary<Object> parts = analyzer.analyse(getEntity());
         List<DecomposableTask> interpretationSubProcesses = parts.map(getContext()::getBestInterpretationProcessFor)
@@ -41,7 +42,6 @@ public class ConceptInterpretationTask implements DecomposableTask {
         Synthesizer synthesizer = getContext().getBestSynthesizerFor(getEntity());
         List<Identity> subTaskResults = decomposedContext.getSubTaskResults();
         Object entityInterpretation = synthesizer.synthesize(subTaskResults, getContext());
-        Identity entityIdentity = getContext().getOrCreateIdentityFor(getEntity());
         getContext().storeInterpretation(entityIdentity, entityInterpretation);
         return entityIdentity;
     }
