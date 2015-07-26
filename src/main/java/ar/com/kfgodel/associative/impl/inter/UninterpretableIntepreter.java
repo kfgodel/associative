@@ -13,7 +13,7 @@ public class UninterpretableIntepreter implements Interpreter {
 
     @Override
     public DecomposableTask describeProcessFor(Object entity, InterpretationContext interpretationContext) {
-        return IdentityAssignationTask.create(interpretationContext, entity, UninterpretationTask.create(interpretationContext));
+        return IdentityAssignationTask.create(interpretationContext, entity, (newIdentity) -> UninterpretationTask.create(newIdentity, interpretationContext));
     }
 
     public static UninterpretableIntepreter create() {

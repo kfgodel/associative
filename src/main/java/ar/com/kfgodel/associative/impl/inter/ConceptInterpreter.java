@@ -13,7 +13,7 @@ public class ConceptInterpreter implements Interpreter {
 
     @Override
     public DecomposableTask describeProcessFor(Object entity, InterpretationContext interpretationContext) {
-        return IdentityAssignationTask.create(interpretationContext, entity, ConceptInterpretationTask.create(entity, interpretationContext));
+        return IdentityAssignationTask.create(interpretationContext, entity, (newIdentity)-> ConceptInterpretationTask.create(newIdentity, entity, interpretationContext));
     }
 
     public static ConceptInterpreter create() {

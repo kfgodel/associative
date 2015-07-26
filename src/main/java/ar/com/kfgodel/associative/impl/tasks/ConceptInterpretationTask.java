@@ -10,22 +10,21 @@ import ar.com.kfgodel.decomposer.api.results.DelayResult;
 import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * This type represents the task of interpreting a concept
  * Created by kfgodel on 13/05/15.
  */
-public class ConceptInterpretationTask implements Function<Identity, Object> {
+public class ConceptInterpretationTask implements DecomposableTask {
 
     private Identity entityIdentity;
     private Object entity;
     private InterpretationContext context;
 
+
     @Override
-    public Object apply(Identity identity) {
-        this.entityIdentity = identity;
+    public Object executeUnder(DecomposedContext taskContext) {
         return this.analyzeEntity();
     }
 
@@ -54,11 +53,13 @@ public class ConceptInterpretationTask implements Function<Identity, Object> {
         return context;
     }
 
-    public static ConceptInterpretationTask create(Object entity, InterpretationContext interpretationContext) {
+    public static ConceptInterpretationTask create(Identity entityIdentity, Object entity, InterpretationContext interpretationContext) {
         ConceptInterpretationTask task = new ConceptInterpretationTask();
+        task.entityIdentity = entityIdentity;
         task.entity = entity;
         task.context = interpretationContext;
         return task;
     }
+
 
 }

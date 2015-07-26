@@ -4,6 +4,7 @@ import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
+import ar.com.kfgodel.decomposer.api.results.DelayResult;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -18,7 +19,7 @@ public class IdentityAssignationTask implements DecomposableTask {
 
     private InterpretationContext context;
     private Object entity;
-    private Function<Identity, Object> interpretationAction;
+    private Function<Identity, DecomposableTask> nextStepGenerator;
 
 
     @Override
@@ -29,14 +30,15 @@ public class IdentityAssignationTask implements DecomposableTask {
             return existingIdentity.get();
         }
         Identity newIdentity = context.createIdentityFor(entity);
-        return interpretationAction.apply(newIdentity);
+        DecomposableTask nextInterpretationStep = nextStepGenerator.apply(newIdentity);
+        return DelayResult.waitingFor(nextInterpretationStep);
     }
 
-    public static IdentityAssignationTask create(InterpretationContext context, Object entity, Function<Identity, Object> interpretationAction) {
+    public static IdentityAssignationTask create(InterpretationContext context, Object entity, Function<Identity, DecomposableTask> nextStepGenerator) {
         IdentityAssignationTask task = new IdentityAssignationTask();
         task.context = context;
         task.entity = entity;
-        task.interpretationAction = interpretationAction;
+        task.nextStepGenerator = nextStepGenerator;
         return task;
     }
 
