@@ -2,10 +2,10 @@ package ar.com.kfgodel.associative;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.kfgodel.associative.api.EntityInterpretation;
+import ar.com.kfgodel.associative.api.EntityRepresentation;
 import ar.com.kfgodel.associative.api.Identity;
-import ar.com.kfgodel.associative.api.unknown.Uninterpretable;
 import ar.com.kfgodel.associative.impl.config.MinimalConfiguration;
+import ar.com.kfgodel.associative.impl.model.UninterpretableRepresentationImpl;
 import ar.com.kfgodel.associative.impl.tasks.InterpretationTask;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
@@ -35,17 +35,17 @@ public class MinimalConfigTest extends JavaSpec<AssociativeTestContext> {
             });
 
             it("interprets everything as uninterpretable", () -> {
-                final EntityInterpretation interpretation = context().interpretation();
+                final EntityRepresentation interpretation = context().interpretation();
 
                 final Optional<Identity> entityIdentity = interpretation.identityOf(context().entity());
                 assertThat(entityIdentity.isPresent()).isTrue();
 
                 final Optional<Object> entityRepresentation = interpretation.representationOf(entityIdentity.get());
-                assertThat(entityRepresentation.get()).isEqualTo(Uninterpretable.class);
+                assertThat(entityRepresentation.get()).isEqualTo(UninterpretableRepresentationImpl.INSTANCE);
             });
 
             it("recognizes only one identity", () -> {
-                final EntityInterpretation interpretation = context().interpretation();
+                final EntityRepresentation interpretation = context().interpretation();
 
                 assertThat(interpretation.identities().count()).isEqualTo(1);
             });

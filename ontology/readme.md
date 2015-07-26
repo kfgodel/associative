@@ -68,7 +68,10 @@ It's the process of generating a network of percepts and concepts that are meani
 entity. This process deconstructs the entity into interpretable parts that form the identity of the entity
 
 
+## Representation
 
+It's the product of the interpretation process, that captures meaningful traits of an entity, expressed in a manner
+ that's useful for teh sentient being
 
 
 

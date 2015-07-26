@@ -1,6 +1,6 @@
 package ar.com.kfgodel.associative.impl.context;
 
-import ar.com.kfgodel.associative.api.EntityInterpretation;
+import ar.com.kfgodel.associative.api.EntityRepresentation;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.InterpretationConfiguration;
@@ -10,11 +10,11 @@ import ar.com.kfgodel.associative.api.context.InterpretationContext;
 import ar.com.kfgodel.associative.api.exceptions.InterpretationException;
 import ar.com.kfgodel.associative.impl.generator.IdentityGenerator;
 import ar.com.kfgodel.associative.impl.generator.IdentityGeneratorImpl;
-import ar.com.kfgodel.associative.impl.inter.EntityInterpretationImpl;
+import ar.com.kfgodel.associative.impl.interpretation.EntityRepresentationImpl;
 import ar.com.kfgodel.associative.impl.maps.EntityMap;
 import ar.com.kfgodel.associative.impl.maps.EntityMapImpl;
-import ar.com.kfgodel.associative.impl.maps.InterpretationMap;
-import ar.com.kfgodel.associative.impl.maps.InterpretationMapImpl;
+import ar.com.kfgodel.associative.impl.maps.RepresentationMap;
+import ar.com.kfgodel.associative.impl.maps.RepresentationMapImpl;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 
 import java.util.Optional;
@@ -26,16 +26,16 @@ import java.util.Optional;
 public class InterpretationContextImpl implements InterpretationContext {
 
     private InterpretationConfiguration config;
-    private EntityMap identitiesPerEntity;
+    private EntityMap identityPerEntity;
     private IdentityGenerator generator;
-    private InterpretationMap interpretationPerIdentity;
+    private RepresentationMap representationPerIdentity;
 
     public static InterpretationContextImpl create(InterpretationConfiguration config) {
         InterpretationContextImpl context = new InterpretationContextImpl();
         context.config = config;
-        context.identitiesPerEntity = EntityMapImpl.create();
+        context.identityPerEntity = EntityMapImpl.create();
         context.generator = IdentityGeneratorImpl.create();
-        context.interpretationPerIdentity = InterpretationMapImpl.create();
+        context.representationPerIdentity = RepresentationMapImpl.create();
         return context;
     }
 
@@ -45,8 +45,8 @@ public class InterpretationContextImpl implements InterpretationContext {
     }
 
     @Override
-    public EntityInterpretation createInterpretation() {
-        return EntityInterpretationImpl.create(identitiesPerEntity, interpretationPerIdentity);
+    public EntityRepresentation completeRepresentation() {
+        return EntityRepresentationImpl.create(identityPerEntity, representationPerIdentity);
     }
 
     private Interpreter getBestInterpreterFor(Object entity) {
@@ -67,26 +67,20 @@ public class InterpretationContextImpl implements InterpretationContext {
     }
 
     @Override
-    public Identity getOrCreateIdentityFor(Object entity) {
-        return getIdentityFor(entity)
-            .orElseGet(()-> createIdentityFor(entity));
-    }
-
-    @Override
     public Identity createIdentityFor(Object entity) {
         Identity newIdentity = generator.createIdentity();
-        identitiesPerEntity.put(entity, newIdentity);
+        identityPerEntity.put(entity, newIdentity);
         return newIdentity;
     }
 
     @Override
-    public void storeInterpretation(Identity entityIdentity, Object entityInterpretation) {
-        interpretationPerIdentity.put(entityIdentity, entityInterpretation);
+    public void storeRepresentationFor(Identity entityIdentity, Object entityRepresentation) {
+        representationPerIdentity.put(entityIdentity, entityRepresentation);
     }
 
     @Override
     public Optional<Identity> getIdentityFor(Object entity) {
-        return identitiesPerEntity.getIdentityFor(entity);
+        return identityPerEntity.getIdentityFor(entity);
     }
 
 }

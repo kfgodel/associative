@@ -1,6 +1,6 @@
 package ar.com.kfgodel.associative.impl.config;
 
-import ar.com.kfgodel.associative.impl.inter.UninterpretableIntepreter;
+import ar.com.kfgodel.associative.impl.interpreter.UninterpretableIntepreter;
 
 /**
  * This type represents a minimal configuration as an extension reference

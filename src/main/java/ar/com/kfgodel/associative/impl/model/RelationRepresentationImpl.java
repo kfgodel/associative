@@ -1,12 +1,12 @@
 package ar.com.kfgodel.associative.impl.model;
 
 import ar.com.kfgodel.associative.api.Identity;
-import ar.com.kfgodel.associative.api.RelationInterpretation;
+import ar.com.kfgodel.associative.api.RelationRepresentation;
 
 /**
  * Created by kfgodel on 14/05/15.
  */
-public class RelationInterpretationImpl implements RelationInterpretation {
+public class RelationRepresentationImpl implements RelationRepresentation {
 
     private Identity origin;
     private Identity relationType;
@@ -27,8 +27,8 @@ public class RelationInterpretationImpl implements RelationInterpretation {
         return destination;
     }
 
-    public static RelationInterpretationImpl create(Identity origin, Identity type, Identity destination) {
-        RelationInterpretationImpl interpretation = new RelationInterpretationImpl();
+    public static RelationRepresentationImpl create(Identity origin, Identity type, Identity destination) {
+        RelationRepresentationImpl interpretation = new RelationRepresentationImpl();
         interpretation.destination = destination;
         interpretation.origin = origin;
         interpretation.relationType = type;

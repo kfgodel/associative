@@ -1,11 +1,11 @@
-package ar.com.kfgodel.associative.impl.inter;
+package ar.com.kfgodel.associative.impl.interpretation;
 
-import ar.com.kfgodel.associative.api.EntityInterpretation;
+import ar.com.kfgodel.associative.api.EntityRepresentation;
 import ar.com.kfgodel.associative.api.Identity;
-import ar.com.kfgodel.associative.api.ObjectInterpretation;
-import ar.com.kfgodel.associative.api.RelationInterpretation;
+import ar.com.kfgodel.associative.api.ObjectRepresentation;
+import ar.com.kfgodel.associative.api.RelationRepresentation;
 import ar.com.kfgodel.associative.impl.maps.EntityMap;
-import ar.com.kfgodel.associative.impl.maps.InterpretationMap;
+import ar.com.kfgodel.associative.impl.maps.RepresentationMap;
 import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.Optional;
@@ -13,10 +13,10 @@ import java.util.Optional;
 /**
  * Created by kfgodel on 13/05/15.
  */
-public class EntityInterpretationImpl implements EntityInterpretation {
+public class EntityRepresentationImpl implements EntityRepresentation {
 
     private EntityMap identities;
-    private InterpretationMap representations;
+    private RepresentationMap representations;
 
     @Override
     public Nary<Identity> identities() {
@@ -24,12 +24,12 @@ public class EntityInterpretationImpl implements EntityInterpretation {
     }
 
     @Override
-    public Nary<RelationInterpretation> relations() {
+    public Nary<RelationRepresentation> relations() {
         return representations.getRelations();
     }
 
     @Override
-    public Nary<ObjectInterpretation> objects() {
+    public Nary<ObjectRepresentation> objects() {
         return representations.getObjects();
     }
 
@@ -43,8 +43,8 @@ public class EntityInterpretationImpl implements EntityInterpretation {
         return representations.getInterpretationFor(reference);
     }
 
-    public static EntityInterpretationImpl create(EntityMap identitiesPerEntity, InterpretationMap interpretationPerIdentity) {
-        EntityInterpretationImpl interpretation = new EntityInterpretationImpl();
+    public static EntityRepresentationImpl create(EntityMap identitiesPerEntity, RepresentationMap interpretationPerIdentity) {
+        EntityRepresentationImpl interpretation = new EntityRepresentationImpl();
         interpretation.identities = identitiesPerEntity;
         interpretation.representations = interpretationPerIdentity;
         return interpretation;

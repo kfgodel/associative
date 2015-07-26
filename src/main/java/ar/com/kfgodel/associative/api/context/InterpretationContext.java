@@ -1,6 +1,6 @@
 package ar.com.kfgodel.associative.api.context;
 
-import ar.com.kfgodel.associative.api.EntityInterpretation;
+import ar.com.kfgodel.associative.api.EntityRepresentation;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Analyzer;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
@@ -26,9 +26,10 @@ public interface InterpretationContext {
     DecomposableTask getBestInterpretationProcessFor(Object entity);
 
     /**
+     * Creates a representation for the
      * @return The created interpretation of this context
      */
-    EntityInterpretation createInterpretation();
+    EntityRepresentation completeRepresentation();
 
     /**
      * Returns the analyzer that best decomposes the given entity into parts
@@ -45,13 +46,6 @@ public interface InterpretationContext {
     Synthesizer getBestSynthesizerFor(Object entity);
 
     /**
-     * Gets or creates the identity for the given entity and stores the relaton to be reused
-     * @param entity The entity to fetch its identity in this context
-     * @return The given identity
-     */
-    Identity getOrCreateIdentityFor(Object entity);
-
-    /**
      * Creates a new identity in this context bound to the given entity
      * @param entity The entity for which a new identity is going to be generated
      * @return The assigned identity for the entity in this context
@@ -59,16 +53,17 @@ public interface InterpretationContext {
     Identity createIdentityFor(Object entity);
 
     /**
-     * Stores the interpretation created in this context for the given identity
-     * @param entityIdentity The identity to relate to the interpretation
-     * @param entityInterpretation The created interpretation
-     */
-    void storeInterpretation(Identity entityIdentity, Object entityInterpretation);
-
-    /**
      * Returns the optional identity for the passed entity (if exists)
      * @param entity The entity whose identity is requested
      * @return The optional identity given in this context, or empty if none is found
      */
     Optional<Identity> getIdentityFor(Object entity);
+
+    /**
+     * Stores the interpretation created in this context for the given identity
+     * @param entityIdentity The identity to relate to the interpretation
+     * @param entityRepresentation The created interpretation
+     */
+    void storeRepresentationFor(Identity entityIdentity, Object entityRepresentation);
+
 }

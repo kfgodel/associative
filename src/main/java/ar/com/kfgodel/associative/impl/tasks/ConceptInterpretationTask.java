@@ -41,8 +41,8 @@ public class ConceptInterpretationTask implements DecomposableTask {
     private Object makeASynthesis(DecomposedContext decomposedContext) {
         List<Identity> subTaskResults = decomposedContext.getSubTaskResults();
         Synthesizer synthesizer = getContext().getBestSynthesizerFor(getEntity());
-        Object entityInterpretation = synthesizer.synthesize(subTaskResults, getContext());
-        getContext().storeInterpretation(entityIdentity, entityInterpretation);
+        Object entityRepresentation = synthesizer.synthesize(subTaskResults, getContext());
+        getContext().storeRepresentationFor(entityIdentity, entityRepresentation);
         return entityIdentity;
     }
 

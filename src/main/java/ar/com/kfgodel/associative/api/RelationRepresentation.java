@@ -8,7 +8,7 @@ package ar.com.kfgodel.associative.api;
  *
  * Created by kfgodel on 12/05/15.
  */
-public interface RelationInterpretation {
+public interface RelationRepresentation {
 
     /**
      * @return The identity that is identifiable as the source of the relation (one of the asymmetric  parts)

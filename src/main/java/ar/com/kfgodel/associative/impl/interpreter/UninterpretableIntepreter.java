@@ -1,4 +1,4 @@
-package ar.com.kfgodel.associative.impl.inter;
+package ar.com.kfgodel.associative.impl.interpreter;
 
 import ar.com.kfgodel.associative.api.config.Interpreter;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;

@@ -3,7 +3,7 @@ package ar.com.kfgodel.associative.impl.synthesizer;
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.config.Synthesizer;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
-import ar.com.kfgodel.associative.impl.model.RelationInterpretationImpl;
+import ar.com.kfgodel.associative.impl.model.RelationRepresentationImpl;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class BoundFieldSynthesizer implements Synthesizer {
 
     @Override
     public Object synthesize(List<Identity> partIdentities, InterpretationContext context) {
-        RelationInterpretationImpl interpretation = RelationInterpretationImpl.create(partIdentities.get(0), partIdentities.get(1), partIdentities.get(2));
+        RelationRepresentationImpl interpretation = RelationRepresentationImpl.create(partIdentities.get(0), partIdentities.get(1), partIdentities.get(2));
         return interpretation;
     }
 

@@ -1,7 +1,7 @@
 package ar.com.kfgodel.associative;
 
 import ar.com.dgarcia.javaspec.api.TestContext;
-import ar.com.kfgodel.associative.api.EntityInterpretation;
+import ar.com.kfgodel.associative.api.EntityRepresentation;
 import ar.com.kfgodel.associative.api.config.InterpretationConfiguration;
 
 import java.util.function.Supplier;
@@ -18,8 +18,8 @@ public interface AssociativeTestContext extends TestContext {
     <R> R entity();
     void entity(Supplier<Object> definition);
 
-    EntityInterpretation interpretation();
-    void interpretation(Supplier<EntityInterpretation> definition);
+    EntityRepresentation interpretation();
+    void interpretation(Supplier<EntityRepresentation> definition);
 
 
 

@@ -1,7 +1,7 @@
 package ar.com.kfgodel.associative.impl.analyzer;
 
 import ar.com.kfgodel.associative.api.config.Analyzer;
-import ar.com.kfgodel.associative.api.unknown.Uninterpretable;
+import ar.com.kfgodel.associative.impl.model.UninterpretableRepresentationImpl;
 import ar.com.kfgodel.diamond.api.fields.BoundField;
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.impl.NaryFromNative;
@@ -19,7 +19,7 @@ public class BoundFieldAnalyzer implements Analyzer {
         BoundField field = (BoundField) entity;
         Object origin = field.instance();
         Object destination = field.get();
-        ArrayList<Object> parts = Lists.newArrayList(origin, Uninterpretable.class, destination);
+        ArrayList<Object> parts = Lists.newArrayList(origin, UninterpretableRepresentationImpl.INSTANCE, destination);
         return NaryFromNative.create(parts.stream());
     }
 

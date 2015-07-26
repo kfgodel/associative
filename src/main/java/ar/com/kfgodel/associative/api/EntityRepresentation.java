@@ -9,7 +9,7 @@ import java.util.Optional;
  *
  * Created by kfgodel on 13/05/15.
  */
-public interface EntityInterpretation {
+public interface EntityRepresentation {
     /**
      * @return The identified found in the entity (as a whole or as parts)
      */
@@ -18,12 +18,12 @@ public interface EntityInterpretation {
     /**
      * @return The interpreted relations between identities in the interpreted entity
      */
-    Nary<RelationInterpretation> relations();
+    Nary<RelationRepresentation> relations();
 
     /**
      * @return The interpreted objects that are identified as the entity or its parts
      */
-    Nary<ObjectInterpretation> objects();
+    Nary<ObjectRepresentation> objects();
 
     /**
      * Returns the identity given in this interpretation to the given object

@@ -1,8 +1,8 @@
 package ar.com.kfgodel.associative.impl.maps;
 
 import ar.com.kfgodel.associative.api.Identity;
-import ar.com.kfgodel.associative.api.ObjectInterpretation;
-import ar.com.kfgodel.associative.api.RelationInterpretation;
+import ar.com.kfgodel.associative.api.ObjectRepresentation;
+import ar.com.kfgodel.associative.api.RelationRepresentation;
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.impl.NaryFromNative;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * Created by kfgodel on 14/05/15.
  */
-public class InterpretationMapImpl implements InterpretationMap {
+public class RepresentationMapImpl implements RepresentationMap {
 
     private Map<Identity, Object> interpretationPerIdentity;
 
@@ -34,21 +34,21 @@ public class InterpretationMapImpl implements InterpretationMap {
     }
 
     @Override
-    public Nary<RelationInterpretation> getRelations() {
+    public Nary<RelationRepresentation> getRelations() {
         return NaryFromNative.create(interpretationPerIdentity.values().stream()
-                .filter(RelationInterpretation.class::isInstance)
-                .map(RelationInterpretation.class::cast));
+                .filter(RelationRepresentation.class::isInstance)
+                .map(RelationRepresentation.class::cast));
     }
 
     @Override
-    public Nary<ObjectInterpretation> getObjects() {
+    public Nary<ObjectRepresentation> getObjects() {
         return NaryFromNative.create(interpretationPerIdentity.values().stream()
-                .filter(ObjectInterpretation.class::isInstance)
-                .map(ObjectInterpretation.class::cast));
+                .filter(ObjectRepresentation.class::isInstance)
+                .map(ObjectRepresentation.class::cast));
     }
 
-    public static InterpretationMapImpl create() {
-        InterpretationMapImpl map = new InterpretationMapImpl();
+    public static RepresentationMapImpl create() {
+        RepresentationMapImpl map = new RepresentationMapImpl();
         map.interpretationPerIdentity = new HashMap<>();
         return map;
     }

@@ -2,7 +2,7 @@ package ar.com.kfgodel.associative.impl.tasks;
 
 import ar.com.kfgodel.associative.api.Identity;
 import ar.com.kfgodel.associative.api.context.InterpretationContext;
-import ar.com.kfgodel.associative.api.unknown.Uninterpretable;
+import ar.com.kfgodel.associative.impl.model.UninterpretableRepresentationImpl;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
 
@@ -18,7 +18,7 @@ public class UninterpretationTask implements DecomposableTask{
 
     @Override
     public Object executeUnder(DecomposedContext taskContext) {
-        context.storeInterpretation(identity, Uninterpretable.class);
+        context.storeRepresentationFor(identity, UninterpretableRepresentationImpl.INSTANCE);
         return identity;
     }
 

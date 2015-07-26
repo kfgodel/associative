@@ -8,7 +8,7 @@ import ar.com.kfgodel.nary.api.Nary;
  *
  * Created by kfgodel on 12/05/15.
  */
-public interface ObjectInterpretation {
+public interface ObjectRepresentation {
 
     /**
      * The relations that form this object

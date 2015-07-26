@@ -25,7 +25,7 @@ public class InterpretationTask implements DecomposableTask {
 
         DecomposableTask interpretationProcess = context.getBestInterpretationProcessFor(entity);
         return DelayResult.waitingFor(interpretationProcess)
-                .andFinally(endContext -> context.createInterpretation());
+                .andFinally(endContext -> context.completeRepresentation());
     }
 
     public static InterpretationTask create(Object entity, InterpretationConfiguration configuration) {
