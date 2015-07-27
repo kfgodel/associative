@@ -47,22 +47,52 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                     return DecomposerProcessor.create().process(interpretationTask);
                 });
 
-                it("all the perceivable identities", () -> {
-                    EntityRepresentation interpretation = context().interpretation();
+                describe("all the perceivable identities", () -> {
 
-                    // One for each object, one for each relation, one for the unconscious relation type
-                    assertThat(interpretation.identities().count()).isEqualTo(5);
+                    it("count",()->{
+                        EntityRepresentation interpretation = context().interpretation();
 
-                    UnObjeto entity = context().entity();
-                    Optional<Identity> entityIdentity = interpretation.identityOf(entity);
-                    assertThat(entityIdentity.isPresent()).isTrue();
+                        // One for each object (2), one for each relation(3), one for the unconscious relation type, one for the string percept
+                        assertThat(interpretation.identities().count()).isEqualTo(7);
+                    });
 
-                    OtroObjeto otroObjeto = entity.getOtro();
-                    Optional<Identity> otroIdentity = interpretation.identityOf(otroObjeto);
-                    assertThat(otroIdentity.isPresent()).isTrue();
+                    it("presence",()->{
+                        EntityRepresentation interpretation = context().interpretation();
 
-                    assertThat(entityIdentity.get()).isNotEqualTo(otroIdentity.get());
+                        UnObjeto unObjeto = context().entity();
+                        Optional<Identity> unObjetoIdentity = interpretation.identityOf(unObjeto);
+                        assertThat(unObjetoIdentity.isPresent()).isTrue();
+
+                        OtroObjeto otroObjeto = unObjeto.getOtro();
+                        Optional<Identity> otroIdentity = interpretation.identityOf(otroObjeto);
+                        assertThat(otroIdentity.isPresent()).isTrue();
+
+                        Optional<Identity> textoIdentity = interpretation.identityOf(unObjeto.getTexto());
+                        assertThat(textoIdentity.isPresent()).isTrue();
+                    });
+
+                    it("difference",()->{
+                        EntityRepresentation interpretation = context().interpretation();
+
+                        UnObjeto unObjeto = context().entity();
+                        OtroObjeto otroObjeto = unObjeto.getOtro();
+                        String texto = unObjeto.getTexto();
+
+                        Optional<Identity> unObjetoIdentity = interpretation.identityOf(unObjeto);
+
+                        Optional<Identity> otroIdentity = interpretation.identityOf(otroObjeto);
+
+                        Optional<Identity> textIdentity = interpretation.identityOf(texto);
+
+                        // Las identidades de los objetos son distintas
+                        assertThat(unObjetoIdentity.get()).isNotEqualTo(otroIdentity.get());
+                        assertThat(textIdentity.get()).isNotEqualTo(unObjetoIdentity.get());
+                        assertThat(textIdentity.get()).isNotEqualTo(otroIdentity.get());
+
+                    });
+
                 });
+
 
                 it("all the discovered objects", () -> {
                     EntityRepresentation interpretation = context().interpretation();
@@ -87,23 +117,31 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
 
                     assertThat(interpretation.objects().count()).isEqualTo(2);
 
-                    UnObjeto entity = context().entity();
-                    Identity entityIdentity = interpretation.identityOf(entity).get();
-                    Identity otroIdentity = interpretation.identityOf(entity.getOtro()).get();
+                    UnObjeto ubObjeto = context().entity();
+                    Identity unObjetoIdentity = interpretation.identityOf(ubObjeto).get();
+                    Identity otroIdentity = interpretation.identityOf(ubObjeto.getOtro()).get();
+                    Identity textoIdentity = interpretation.identityOf(ubObjeto.getTexto()).get();
 
-                    Optional<ObjectRepresentation> entityRepresentation = interpretation.representationOf(entityIdentity);
-                    assertThat(entityRepresentation.get().relations().count()).isEqualTo(1);
-                    Identity entitySourcedRelationIdentity = entityRepresentation.get().relations().findFirst().get();
-                    RelationRepresentation entitySourcedRelation = interpretation.<RelationRepresentation>representationOf(entitySourcedRelationIdentity).get();
-                    assertThat(entitySourcedRelation.origin()).isSameAs(entityIdentity);
-                    assertThat(entitySourcedRelation.destination()).isSameAs(otroIdentity);
+                    Optional<ObjectRepresentation> entityRepresentation = interpretation.representationOf(unObjetoIdentity);
+                    assertThat(entityRepresentation.get().relations().count()).isEqualTo(2);
+
+                    Identity unObjetoFirstRelationIdentity = entityRepresentation.get().relations().findFirst().get();
+                    RelationRepresentation unObjetoFirstRelation = interpretation.<RelationRepresentation>representationOf(unObjetoFirstRelationIdentity).get();
+                    assertThat(unObjetoFirstRelation.origin()).isSameAs(unObjetoIdentity);
+                    assertThat(unObjetoFirstRelation.destination()).isSameAs(otroIdentity);
+
+                    Identity unObjetoSecondRelationIdentity = entityRepresentation.get().relations().skip(1).findFirst().get();
+                    RelationRepresentation unObjetoSecondRelation = interpretation.<RelationRepresentation>representationOf(unObjetoSecondRelationIdentity).get();
+                    assertThat(unObjetoSecondRelation.origin()).isSameAs(unObjetoIdentity);
+                    assertThat(unObjetoSecondRelation.destination()).isSameAs(textoIdentity);
+
 
                     Optional<ObjectRepresentation> otroRepresentation = interpretation.representationOf(otroIdentity);
                     assertThat(otroRepresentation.get().relations().count()).isEqualTo(1);
-                    Identity otroSourcedRelationIdentity = otroRepresentation.get().relations().findFirst().get();
-                    RelationRepresentation otroSourcedRelation = interpretation.<RelationRepresentation>representationOf(otroSourcedRelationIdentity).get();
-                    assertThat(otroSourcedRelation.origin()).isSameAs(otroIdentity);
-                    assertThat(otroSourcedRelation.destination()).isSameAs(entityIdentity);
+                    Identity otroRelationIdentity = otroRepresentation.get().relations().findFirst().get();
+                    RelationRepresentation otroRelation = interpretation.<RelationRepresentation>representationOf(otroRelationIdentity).get();
+                    assertThat(otroRelation.origin()).isSameAs(otroIdentity);
+                    assertThat(otroRelation.destination()).isSameAs(unObjetoIdentity);
                 });
             });
         });

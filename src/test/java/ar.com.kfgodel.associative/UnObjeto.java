@@ -10,6 +10,16 @@ public class UnObjeto {
 
     private OtroObjeto otro;
 
+    private String texto;
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
     public OtroObjeto getOtro() {
         return otro;
     }
@@ -20,6 +30,7 @@ public class UnObjeto {
 
     public static UnObjeto create() {
         UnObjeto unObjeto = new UnObjeto();
+        unObjeto.texto = "hola";
         unObjeto.otro = OtroObjeto.create();
         unObjeto.otro.setUno(unObjeto);
         return unObjeto;
