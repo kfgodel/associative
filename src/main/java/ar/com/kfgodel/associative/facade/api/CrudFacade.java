@@ -10,10 +10,10 @@ public interface CrudFacade {
 
     /**
      * Creates a persistent state of the given object returning an identificator to retrieve it later
-     * @param object The object to persist
+     * @param entity The object to persist
      * @return The identificator of the persisted state representing the given object
      */
-    Long create(Object object);
+    Long create(Object entity);
 
     /**
      * Retrieves the persistent state identified by the given identificator, with the structure of the given class

@@ -29,8 +29,13 @@ public class EntityRepresentationImpl implements EntityRepresentation {
     }
 
     @Override
-    public Nary<ObjectRepresentation> objects() {
-        return representations.getObjects();
+    public Nary<ObjectRepresentation> concepts() {
+        return representations.getConcepts();
+    }
+
+    @Override
+    public Nary<Object> percepts() {
+        return representations.getPercepts();
     }
 
     @Override

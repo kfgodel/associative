@@ -41,10 +41,16 @@ public class RepresentationMapImpl implements RepresentationMap {
     }
 
     @Override
-    public Nary<ObjectRepresentation> getObjects() {
+    public Nary<ObjectRepresentation> getConcepts() {
         return NaryFromNative.create(interpretationPerIdentity.values().stream()
                 .filter(ObjectRepresentation.class::isInstance)
                 .map(ObjectRepresentation.class::cast));
+    }
+
+    @Override
+    public Nary<Object> getPercepts() {
+        return NaryFromNative.create(interpretationPerIdentity.values().stream()
+                .filter((representation)-> !ObjectRepresentation.class.isInstance(representation) && !RelationRepresentation.class.isInstance(representation)));
     }
 
     public static RepresentationMapImpl create() {

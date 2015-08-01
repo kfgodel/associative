@@ -23,7 +23,12 @@ public interface EntityRepresentation {
     /**
      * @return The interpreted objects that are identified as the entity or its parts
      */
-    Nary<ObjectRepresentation> objects();
+    Nary<ObjectRepresentation> concepts();
+
+    /**
+     * @return The interpreted percepts that compose the entity
+     */
+    Nary<Object> percepts();
 
     /**
      * Returns the identity given in this interpretation to the given object
@@ -40,4 +45,5 @@ public interface EntityRepresentation {
      * @return The interpretation created for the given identity or empty if there's no such thing in this instance
      */
     <R> Optional<R> representationOf(Identity reference);
+
 }

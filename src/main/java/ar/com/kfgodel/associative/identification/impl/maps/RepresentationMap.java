@@ -19,5 +19,7 @@ public interface RepresentationMap {
 
     Nary<RelationRepresentation> getRelations();
 
-    Nary<ObjectRepresentation> getObjects();
+    Nary<ObjectRepresentation> getConcepts();
+
+    Nary<Object> getPercepts();
 }

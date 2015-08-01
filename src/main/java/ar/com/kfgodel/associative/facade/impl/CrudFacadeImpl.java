@@ -1,6 +1,9 @@
 package ar.com.kfgodel.associative.facade.impl;
 
 import ar.com.kfgodel.associative.facade.api.CrudFacade;
+import ar.com.kfgodel.associative.memorization.impl.tasks.MemoryCreationTask;
+import ar.com.kfgodel.decomposer.api.DecomposableTask;
+import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
 import ar.com.kfgodel.nary.api.Nary;
 
 /**
@@ -8,8 +11,10 @@ import ar.com.kfgodel.nary.api.Nary;
  */
 public class CrudFacadeImpl implements CrudFacade {
     @Override
-    public Long create(Object object) {
-        return null;
+    public Long create(Object entity) {
+        DecomposableTask creationTask = MemoryCreationTask.create(entity);
+        return DecomposerProcessor.create()
+                .process(creationTask);
     }
 
     @Override

@@ -8,14 +8,18 @@ import ar.com.kfgodel.associative.identification.api.Identity;
 import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.associative.identification.impl.config.DefaultConfiguration;
+import ar.com.kfgodel.associative.identification.impl.model.UninterpretableRepresentationImpl;
 import ar.com.kfgodel.associative.identification.impl.tasks.InterpretationTask;
 import ar.com.kfgodel.associative.objects.OtroObjeto;
 import ar.com.kfgodel.associative.objects.UnObjeto;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
+import com.google.common.collect.Lists;
 import org.junit.runner.RunWith;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,14 +56,14 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
 
                 describe("all the perceivable identities", () -> {
 
-                    it("count",()->{
+                    it("count", () -> {
                         EntityRepresentation interpretation = context().interpretation();
 
                         // One for each object (2), one for each relation(3), one for the unconscious relation type, one for the string percept
                         assertThat(interpretation.identities().count()).isEqualTo(7);
                     });
 
-                    it("presence",()->{
+                    it("presence", () -> {
                         EntityRepresentation interpretation = context().interpretation();
 
                         UnObjeto unObjeto = context().entity();
@@ -74,7 +78,7 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                         assertThat(textoIdentity.isPresent()).isTrue();
                     });
 
-                    it("difference",()->{
+                    it("difference", () -> {
                         EntityRepresentation interpretation = context().interpretation();
 
                         UnObjeto unObjeto = context().entity();
@@ -97,10 +101,10 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                 });
 
 
-                it("all the discovered objects", () -> {
+                it("all the discovered concepts", () -> {
                     EntityRepresentation interpretation = context().interpretation();
 
-                    assertThat(interpretation.objects().count()).isEqualTo(2);
+                    assertThat(interpretation.concepts().count()).isEqualTo(2);
 
                     UnObjeto entity = context().entity();
                     Identity entityIdentity = interpretation.identityOf(entity).get();
@@ -118,12 +122,12 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                 it("all the discovered relations", () -> {
                     EntityRepresentation interpretation = context().interpretation();
 
-                    assertThat(interpretation.objects().count()).isEqualTo(2);
+                    assertThat(interpretation.concepts().count()).isEqualTo(2);
 
-                    UnObjeto ubObjeto = context().entity();
-                    Identity unObjetoIdentity = interpretation.identityOf(ubObjeto).get();
-                    Identity otroIdentity = interpretation.identityOf(ubObjeto.getOtro()).get();
-                    Identity textoIdentity = interpretation.identityOf(ubObjeto.getTexto()).get();
+                    UnObjeto unObjeto = context().entity();
+                    Identity unObjetoIdentity = interpretation.identityOf(unObjeto).get();
+                    Identity otroIdentity = interpretation.identityOf(unObjeto.getOtro()).get();
+                    Identity textoIdentity = interpretation.identityOf(unObjeto.getTexto()).get();
 
                     Optional<ObjectRepresentation> entityRepresentation = interpretation.representationOf(unObjetoIdentity);
                     assertThat(entityRepresentation.get().relations().count()).isEqualTo(2);
@@ -145,6 +149,19 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                     RelationRepresentation otroRelation = interpretation.<RelationRepresentation>representationOf(otroRelationIdentity).get();
                     assertThat(otroRelation.origin()).isSameAs(otroIdentity);
                     assertThat(otroRelation.destination()).isSameAs(unObjetoIdentity);
+                });
+
+                it("all the discovered percepts",()->{
+                    EntityRepresentation interpretation = context().interpretation();
+
+                    UnObjeto unObjeto = context().entity();
+                    Identity textoIdentity = interpretation.identityOf(unObjeto.getTexto()).get();
+
+                    List<Object> perceptList = interpretation.percepts().collect(Collectors.toList());
+
+                    // One is the text string and the other is the uninterpretable used for relations
+                    assertThat(perceptList).hasSize(2);
+                    assertThat(perceptList).isEqualTo(Lists.newArrayList(UninterpretableRepresentationImpl.INSTANCE, "hola"));
                 });
             });
         });
