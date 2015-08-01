@@ -1,8 +1,10 @@
 package ar.com.kfgodel.associative;
 
 import ar.com.dgarcia.javaspec.api.TestContext;
-import ar.com.kfgodel.associative.api.EntityRepresentation;
-import ar.com.kfgodel.associative.api.config.InterpretationConfiguration;
+import ar.com.kfgodel.associative.facade.api.CrudFacade;
+import ar.com.kfgodel.associative.identification.api.EntityRepresentation;
+import ar.com.kfgodel.associative.identification.api.config.InterpretationConfiguration;
+import ar.com.kfgodel.associative.objects.TestUser;
 
 import java.util.function.Supplier;
 
@@ -21,6 +23,15 @@ public interface AssociativeTestContext extends TestContext {
     EntityRepresentation interpretation();
     void interpretation(Supplier<EntityRepresentation> definition);
 
+
+    CrudFacade facade();
+    void facade(Supplier<CrudFacade> definition);
+
+    TestUser user();
+    void user(Supplier<TestUser> definition);
+
+    Long persistedId();
+    void persistedId(Supplier<Long> definition);
 
 
 }
