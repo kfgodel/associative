@@ -34,8 +34,8 @@ public class MatchedConcept {
     }
 
     public Nary<ConceptResult> calculateResults() {
-        final List<LinkedHashSet<PersistentRelation>> values = new ArrayList<>(matchedRelations.values());
-        final Set<List<PersistentRelation>> relationOptions = Sets.cartesianProduct(values);
+        final List<LinkedHashSet<PersistentRelation>> matchingGroups = new ArrayList<>(matchedRelations.values());
+        final Set<List<PersistentRelation>> relationOptions = Sets.cartesianProduct(matchingGroups);
         List<ConceptResult> foundResults = new ArrayList<>();
         for (List<PersistentRelation> combinationOption : relationOptions) {
             final Optional<Long> commonSource = extractCommonSourceFrom(combinationOption);
@@ -62,5 +62,14 @@ public class MatchedConcept {
             }
         }
         return Optional.of(commonSource);
+    }
+
+    public void consider(PersistentRelation relation) {
+        final List<RelationPredicate> predicates = conceptPredicate.getRelationPredicates();
+        for (RelationPredicate predicate : predicates) {
+            if(predicate.matches(relation)){
+                this.addMatch(predicate, relation);
+            }
+        }
     }
 }

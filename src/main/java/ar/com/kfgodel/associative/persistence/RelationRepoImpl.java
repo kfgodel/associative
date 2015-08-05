@@ -25,13 +25,8 @@ public class RelationRepoImpl implements RelationRepo {
     @Override
     public Nary<ConceptResult> findConcept(ConceptPredicate conceptPredicate) {
         MatchedConcept matchedConcept = MatchedConcept.create(conceptPredicate);
-        final List<RelationPredicate> predicates = conceptPredicate.getRelationPredicates();
         for (PersistentRelation relation : relations) {
-            for (RelationPredicate predicate : predicates) {
-                if(predicate.matches(relation)){
-                    matchedConcept.addMatch(predicate, relation);
-                }
-            }
+            matchedConcept.consider(relation);
         }
         return matchedConcept.calculateResults();
     }
