@@ -43,4 +43,8 @@ public class ConceptPredicate {
     public String toString() {
         return getClass().getSimpleName() +  this.relationPredicates;
     }
+
+    public void addPredicate(RelationPredicate relationPredicate) {
+        this.relationPredicates.add(relationPredicate);
+    }
 }
