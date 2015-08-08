@@ -1,5 +1,7 @@
 package ar.com.kfgodel.associative.persistence;
 
+import ar.com.kfgodel.hashcode.Hashcodes;
+
 /**
  * Created by kfgodel on 04/08/2015.
  */
@@ -44,5 +46,19 @@ public class PersistentRelation {
     @Override
     public String toString() {
         return getClass().getSimpleName() + "{" + getSource() + "-" + getType() + "->" + getDestination() + "}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!PersistentRelation.class.isInstance(obj)){
+            return false;
+        }
+        PersistentRelation other = (PersistentRelation) obj;
+        return this.getSource().equals(other.getSource()) && this.getType().equals(other.getType()) && this.getDestination().equals(other.getDestination());
+    }
+
+    @Override
+    public int hashCode() {
+        return Hashcodes.joining(getSource(), getType(), getDestination());
     }
 }

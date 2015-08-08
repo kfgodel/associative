@@ -18,7 +18,7 @@ public class MagiRepoImpl implements MagiRepo {
     @Override
     public Long storePercept(Object percept) {
         Optional<Long> identificator = percepts.getIdentificatorOf(percept);
-        return identificator.orElseGet(()-> createNewPerceptRecord(percept));
+        return identificator.orElseGet(() -> createNewPerceptRecord(percept));
     }
 
     @Override
@@ -30,9 +30,15 @@ public class MagiRepoImpl implements MagiRepo {
     }
 
     @Override
-    public Long storeRelation(Long source, Long type, Long destination) {
-        Optional<PersistentRelation> relations.findRelation(source, type, destination);
-        return null;
+    public Long storeRelation(PersistentRelation persistentRelation) {
+        Optional<Long> foundRelation = relations.getIdentificatorOf(persistentRelation);
+        return foundRelation.orElseGet(() -> this.createRelationRecord(persistentRelation));
+    }
+
+    private Long createRelationRecord(PersistentRelation persistentRelation) {
+        Long relationIdentificator = identities.createNew();
+        relations.persistWith(relationIdentificator, persistentRelation);
+        return relationIdentificator;
     }
 
     private Long createNewPerceptRecord(Object percept) {

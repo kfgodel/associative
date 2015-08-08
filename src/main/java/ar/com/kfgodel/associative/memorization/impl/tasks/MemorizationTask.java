@@ -6,6 +6,7 @@ import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.associative.memorization.impl.memories.InterpretationMemoryImpl;
 import ar.com.kfgodel.associative.persistence.ConceptPredicate;
+import ar.com.kfgodel.associative.persistence.PersistentRelation;
 import ar.com.kfgodel.associative.persistence.RelationPredicate;
 import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
@@ -46,7 +47,6 @@ public class MemorizationTask implements DecomposableTask {
         ConceptPredicate conceptPredicate = ConceptPredicate.create();
         for (Identity conceptRelationIdentity : concept.relations()) {
             Optional<RelationRepresentation> relationRepresentation = interpretation.representationOf(conceptRelationIdentity);
-            relationRepresentation.get();
             Long restrictedType = memory.identificatorOf(relationRepresentation.get().relationType());
             Long restrictedDestination = memory.identificatorOf(relationRepresentation.get().destination());
             RelationPredicate relationPredicate = RelationPredicate.create(restrictedType, restrictedDestination);
@@ -60,7 +60,7 @@ public class MemorizationTask implements DecomposableTask {
             Long source = memory.identificatorOf(relation.origin());
             Long type = memory.identificatorOf(relation.relationType());
             Long destination = memory.identificatorOf(relation.destination());
-            Long relationIdentificator = repo.storeRelation(source, type, destination);
+            Long relationIdentificator = repo.storeRelation(PersistentRelation.create(source, type, destination));
             Identity relationIdentity = interpretation.identityOf(relation).get();
             memory.assignTo(relationIdentity, relationIdentificator);
         }

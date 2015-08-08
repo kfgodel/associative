@@ -46,10 +46,11 @@ public class MemoryCreationTask implements DecomposableTask {
         return entityIdentificator;
     }
 
-    public static MemoryCreationTask create(Object entity, MagiRepo repo) {
+    public static MemoryCreationTask create(Object entity, MagiRepo repo, InterpretationConfiguration interpreationConfig) {
         MemoryCreationTask creationTask = new MemoryCreationTask();
         creationTask.entity = entity;
         creationTask.repo = repo;
+        creationTask.interpreationConfig = interpreationConfig;
         return creationTask;
     }
 
