@@ -1,7 +1,7 @@
 package ar.com.kfgodel.associative.identification.impl.model;
 
+import ar.com.kfgodel.associative.identification.api.ConceptRepresentation;
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.impl.NaryFromNative;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by kfgodel on 14/05/15.
  */
-public class ObjectRepresentationImpl implements ObjectRepresentation {
+public class ConceptRepresentationImpl implements ConceptRepresentation {
 
     private List<Identity> relations;
 
@@ -19,8 +19,8 @@ public class ObjectRepresentationImpl implements ObjectRepresentation {
         return NaryFromNative.create(relations.stream());
     }
 
-    public static ObjectRepresentationImpl create(List<Identity> partIdentities) {
-        ObjectRepresentationImpl interpretation = new ObjectRepresentationImpl();
+    public static ConceptRepresentationImpl create(List<Identity> partIdentities) {
+        ConceptRepresentationImpl interpretation = new ConceptRepresentationImpl();
         interpretation.relations = partIdentities;
         return interpretation;
     }

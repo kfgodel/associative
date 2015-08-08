@@ -3,9 +3,9 @@ package ar.com.kfgodel.associative.identification;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.kfgodel.associative.AssociativeTestContext;
+import ar.com.kfgodel.associative.identification.api.ConceptRepresentation;
 import ar.com.kfgodel.associative.identification.api.EntityRepresentation;
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.associative.identification.impl.config.DefaultConfiguration;
 import ar.com.kfgodel.associative.identification.impl.model.UninterpretableRepresentationImpl;
@@ -110,10 +110,10 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                     Identity entityIdentity = interpretation.identityOf(entity).get();
                     Identity otroIdentity = interpretation.identityOf(entity.getOtro()).get();
 
-                    Optional<ObjectRepresentation> entityRepresentation = interpretation.representationOf(entityIdentity);
+                    Optional<ConceptRepresentation> entityRepresentation = interpretation.representationOf(entityIdentity);
                     assertThat(entityRepresentation.isPresent()).isTrue();
 
-                    Optional<ObjectRepresentation> otroRepresentation = interpretation.representationOf(otroIdentity);
+                    Optional<ConceptRepresentation> otroRepresentation = interpretation.representationOf(otroIdentity);
                     assertThat(otroRepresentation.isPresent()).isTrue();
 
                     assertThat(entityRepresentation.get()).isNotEqualTo(otroRepresentation.get());
@@ -129,7 +129,7 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                     Identity otroIdentity = interpretation.identityOf(unObjeto.getOtro()).get();
                     Identity textoIdentity = interpretation.identityOf(unObjeto.getTexto()).get();
 
-                    Optional<ObjectRepresentation> entityRepresentation = interpretation.representationOf(unObjetoIdentity);
+                    Optional<ConceptRepresentation> entityRepresentation = interpretation.representationOf(unObjetoIdentity);
                     assertThat(entityRepresentation.get().relations().count()).isEqualTo(2);
 
                     Identity unObjetoFirstRelationIdentity = entityRepresentation.get().relations().findFirst().get();
@@ -143,7 +143,7 @@ public class EntityRepresentationTest extends JavaSpec<AssociativeTestContext> {
                     assertThat(unObjetoSecondRelation.destination()).isSameAs(textoIdentity);
 
 
-                    Optional<ObjectRepresentation> otroRepresentation = interpretation.representationOf(otroIdentity);
+                    Optional<ConceptRepresentation> otroRepresentation = interpretation.representationOf(otroIdentity);
                     assertThat(otroRepresentation.get().relations().count()).isEqualTo(1);
                     Identity otroRelationIdentity = otroRepresentation.get().relations().findFirst().get();
                     RelationRepresentation otroRelation = interpretation.<RelationRepresentation>representationOf(otroRelationIdentity).get();

@@ -11,24 +11,24 @@ import java.util.Optional;
  */
 public interface EntityRepresentation {
     /**
-     * @return The identified found in the entity (as a whole or as parts)
+     * @return The identities found in the entity (as a whole or as parts)
      */
     Nary<Identity> identities();
 
     /**
-     * @return The interpreted relations between identities in the interpreted entity
+     * @return The identities of the interpreted relations between the entity and its parts
      */
-    Nary<RelationRepresentation> relations();
+    Nary<Identity> relations();
 
     /**
      * @return The interpreted objects that are identified as the entity or its parts
      */
-    Nary<ObjectRepresentation> concepts();
+    Nary<Identity> concepts();
 
     /**
      * @return The interpreted percepts that compose the entity
      */
-    Nary<Object> percepts();
+    Nary<Identity> percepts();
 
     /**
      * Returns the identity given in this interpretation to the given object

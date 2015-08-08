@@ -2,8 +2,6 @@ package ar.com.kfgodel.associative.identification.impl.interpretation;
 
 import ar.com.kfgodel.associative.identification.api.EntityRepresentation;
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
-import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.associative.identification.impl.maps.EntityMap;
 import ar.com.kfgodel.associative.identification.impl.maps.RepresentationMap;
 import ar.com.kfgodel.nary.api.Nary;
@@ -24,17 +22,17 @@ public class EntityRepresentationImpl implements EntityRepresentation {
     }
 
     @Override
-    public Nary<RelationRepresentation> relations() {
+    public Nary<Identity> relations() {
         return representations.getRelations();
     }
 
     @Override
-    public Nary<ObjectRepresentation> concepts() {
+    public Nary<Identity> concepts() {
         return representations.getConcepts();
     }
 
     @Override
-    public Nary<Object> percepts() {
+    public Nary<Identity> percepts() {
         return representations.getPercepts();
     }
 

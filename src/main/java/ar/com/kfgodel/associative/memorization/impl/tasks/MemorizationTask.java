@@ -1,8 +1,8 @@
 package ar.com.kfgodel.associative.memorization.impl.tasks;
 
+import ar.com.kfgodel.associative.identification.api.ConceptRepresentation;
 import ar.com.kfgodel.associative.identification.api.EntityRepresentation;
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.associative.memorization.impl.memories.InterpretationMemoryImpl;
 import ar.com.kfgodel.associative.persistence.ConceptPredicate;
@@ -11,7 +11,6 @@ import ar.com.kfgodel.associative.persistence.RelationPredicate;
 import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
-import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.Optional;
 
@@ -34,16 +33,15 @@ public class MemorizationTask implements DecomposableTask {
     }
 
     private void storeConcepts() {
-        Nary<ObjectRepresentation> concepts = interpretation.concepts();
-        for (ObjectRepresentation concept : concepts) {
-            ConceptPredicate conceptPredicate = createPredicateFor(concept);
+        for (Identity conceptIdentity : interpretation.concepts()) {
+            Optional<ConceptRepresentation> conceptRepresentation = interpretation.representationOf(conceptIdentity);
+            ConceptPredicate conceptPredicate = createPredicateFor(conceptRepresentation.get());
             Long conceptIdentificator = repo.storeConceptIdentity(conceptPredicate);
-            Identity conceptIdentity = interpretation.identityOf(concept).get();
             memory.assignTo(conceptIdentity, conceptIdentificator);
         }
     }
 
-    private ConceptPredicate createPredicateFor(ObjectRepresentation concept) {
+    private ConceptPredicate createPredicateFor(ConceptRepresentation concept) {
         ConceptPredicate conceptPredicate = ConceptPredicate.create();
         for (Identity conceptRelationIdentity : concept.relations()) {
             Optional<RelationRepresentation> relationRepresentation = interpretation.representationOf(conceptRelationIdentity);
@@ -56,20 +54,20 @@ public class MemorizationTask implements DecomposableTask {
     }
 
     private void storeRelations() {
-        for (RelationRepresentation relation : interpretation.relations()) {
-            Long source = memory.identificatorOf(relation.origin());
-            Long type = memory.identificatorOf(relation.relationType());
-            Long destination = memory.identificatorOf(relation.destination());
+        for (Identity relationIdentity : interpretation.relations()) {
+            Optional<RelationRepresentation> relationRepresentation = interpretation.representationOf(relationIdentity);
+            Long source = memory.identificatorOf(relationRepresentation.get().origin());
+            Long type = memory.identificatorOf(relationRepresentation.get().relationType());
+            Long destination = memory.identificatorOf(relationRepresentation.get().destination());
             Long relationIdentificator = repo.storeRelation(PersistentRelation.create(source, type, destination));
-            Identity relationIdentity = interpretation.identityOf(relation).get();
             memory.assignTo(relationIdentity, relationIdentificator);
         }
     }
 
     private void storePercepts() {
-        for (Object percept : interpretation.percepts()) {
-            Long perceptIdentificator = repo.storePercept(percept);
-            Identity perceptIdentity = interpretation.identityOf(percept).get();
+        for (Identity perceptIdentity : interpretation.percepts()) {
+            Optional<Object> percept = interpretation.representationOf(perceptIdentity);
+            Long perceptIdentificator = repo.storePercept(percept.get());
             memory.assignTo(perceptIdentity, perceptIdentificator);
         }
     }

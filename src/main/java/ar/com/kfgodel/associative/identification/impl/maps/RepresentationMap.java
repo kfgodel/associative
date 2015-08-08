@@ -1,8 +1,6 @@
 package ar.com.kfgodel.associative.identification.impl.maps;
 
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
-import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.nary.api.Nary;
 
 import java.util.Optional;
@@ -17,9 +15,9 @@ public interface RepresentationMap {
 
     Nary<Identity> getIdentities();
 
-    Nary<RelationRepresentation> getRelations();
+    Nary<Identity> getRelations();
 
-    Nary<ObjectRepresentation> getConcepts();
+    Nary<Identity> getConcepts();
 
-    Nary<Object> getPercepts();
+    Nary<Identity> getPercepts();
 }

@@ -1,7 +1,7 @@
 package ar.com.kfgodel.associative.identification.impl.maps;
 
+import ar.com.kfgodel.associative.identification.api.ConceptRepresentation;
 import ar.com.kfgodel.associative.identification.api.Identity;
-import ar.com.kfgodel.associative.identification.api.ObjectRepresentation;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.impl.NaryFromNative;
@@ -34,23 +34,24 @@ public class RepresentationMapImpl implements RepresentationMap {
     }
 
     @Override
-    public Nary<RelationRepresentation> getRelations() {
-        return NaryFromNative.create(interpretationPerIdentity.values().stream()
-                .filter(RelationRepresentation.class::isInstance)
-                .map(RelationRepresentation.class::cast));
+    public Nary<Identity> getRelations() {
+        return NaryFromNative.create(interpretationPerIdentity.entrySet().stream()
+                .filter((entry) -> RelationRepresentation.class.isInstance(entry.getValue()))
+                .map(Map.Entry::getKey));
     }
 
     @Override
-    public Nary<ObjectRepresentation> getConcepts() {
-        return NaryFromNative.create(interpretationPerIdentity.values().stream()
-                .filter(ObjectRepresentation.class::isInstance)
-                .map(ObjectRepresentation.class::cast));
+    public Nary<Identity> getConcepts() {
+        return NaryFromNative.create(interpretationPerIdentity.entrySet().stream()
+                .filter((entry) -> ConceptRepresentation.class.isInstance(entry.getValue()))
+                .map(Map.Entry::getKey));
     }
 
     @Override
-    public Nary<Object> getPercepts() {
-        return NaryFromNative.create(interpretationPerIdentity.values().stream()
-                .filter((representation)-> !ObjectRepresentation.class.isInstance(representation) && !RelationRepresentation.class.isInstance(representation)));
+    public Nary<Identity> getPercepts() {
+        return NaryFromNative.create(interpretationPerIdentity.entrySet().stream()
+                .filter((entry) -> !ConceptRepresentation.class.isInstance(entry.getValue()) && !RelationRepresentation.class.isInstance(entry.getValue()))
+                .map(Map.Entry::getKey));
     }
 
     public static RepresentationMapImpl create() {
