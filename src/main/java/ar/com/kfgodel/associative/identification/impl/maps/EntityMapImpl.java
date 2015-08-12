@@ -1,9 +1,10 @@
 package ar.com.kfgodel.associative.identification.impl.maps;
 
 import ar.com.kfgodel.associative.identification.api.Identity;
+import ar.com.kfgodel.nary.impl.NaryFromNative;
+import ar.com.kfgodel.optionals.Optional;
 
 import java.util.IdentityHashMap;
-import java.util.Optional;
 
 /**
  * Created by kfgodel on 14/05/15.
@@ -14,7 +15,7 @@ public class EntityMapImpl implements EntityMap {
 
     @Override
     public Optional<Identity> getIdentityFor(Object entity) {
-        return Optional.ofNullable(identitiesPerEntity.get(entity));
+        return NaryFromNative.ofNullable(identitiesPerEntity.get(entity));
     }
 
     @Override

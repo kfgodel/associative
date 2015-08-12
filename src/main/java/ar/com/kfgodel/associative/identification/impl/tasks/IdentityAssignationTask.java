@@ -5,8 +5,8 @@ import ar.com.kfgodel.associative.identification.api.context.InterpretationConte
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
 import ar.com.kfgodel.decomposer.api.results.DelayResult;
+import ar.com.kfgodel.optionals.Optional;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 /**

@@ -4,6 +4,7 @@ import ar.com.kfgodel.associative.persistence.*;
 import ar.com.kfgodel.associative.persistence.api.magi.IdentityRepo;
 import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
 import ar.com.kfgodel.associative.persistence.api.magi.PerceptRepo;
+import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.optionals.Optional;
 
 /**
@@ -33,6 +34,16 @@ public class MagiRepoImpl implements MagiRepo {
     public Long storeRelation(PersistentRelation persistentRelation) {
         Optional<Long> foundRelation = relations.getIdentificatorOf(persistentRelation);
         return foundRelation.orElseGet(() -> this.createRelationRecord(persistentRelation));
+    }
+
+    @Override
+    public Optional<Long> retrievePercept(Object percept) {
+        return percepts.getIdentificatorOf(percept);
+    }
+
+    @Override
+    public Nary<ConceptResult> retrieveConcept(ConceptPredicate conceptPredicate) {
+        return relations.findConcept(conceptPredicate);
     }
 
     private Long createRelationRecord(PersistentRelation persistentRelation) {

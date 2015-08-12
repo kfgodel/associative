@@ -32,8 +32,8 @@ public class RelationRepositoryTest extends JavaSpec<AssociativeTestContext> {
                 repo.add(PersistentRelation.create(6L, 1L, 3L));
 
                 ConceptPredicate conceptPredicate = ConceptPredicate.create(
-                        RelationPredicate.create(1L, 2L),
-                        RelationPredicate.create(1L, 3L));
+                        RestrictedTypeAndDestination.create(1L, 2L),
+                        RestrictedTypeAndDestination.create(1L, 3L));
 
                 List<ConceptResult> matches = repo.findConcept(conceptPredicate).collect(Collectors.toList());
                 assertThat(matches).hasSize(1);
@@ -44,8 +44,8 @@ public class RelationRepositoryTest extends JavaSpec<AssociativeTestContext> {
                 RelationRepo repo = RelationRepoImpl.create();
 
                 ConceptPredicate conceptPredicate = ConceptPredicate.create(
-                        RelationPredicate.create(1L, 2L),
-                        RelationPredicate.create(1L, 3L));
+                        RestrictedTypeAndDestination.create(1L, 2L),
+                        RestrictedTypeAndDestination.create(1L, 3L));
 
                 List<ConceptResult> matches = repo.findConcept(conceptPredicate).collect(Collectors.toList());
                 assertThat(matches).hasSize(0);
@@ -62,8 +62,8 @@ public class RelationRepositoryTest extends JavaSpec<AssociativeTestContext> {
                 repo.add(PersistentRelation.create(8L, 2L, 2L));
 
                 ConceptPredicate conceptPredicate = ConceptPredicate.create(
-                        RelationPredicate.create(1L, 2L),
-                        RelationPredicate.create(1L, 3L));
+                        RestrictedTypeAndDestination.create(1L, 2L),
+                        RestrictedTypeAndDestination.create(1L, 3L));
 
                 List<ConceptResult> matches = repo.findConcept(conceptPredicate).collect(Collectors.toList());
                 assertThat(matches).hasSize(2);

@@ -1,8 +1,7 @@
 package ar.com.kfgodel.associative.identification.impl.maps;
 
 import ar.com.kfgodel.associative.identification.api.Identity;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * Created by kfgodel on 14/05/15.

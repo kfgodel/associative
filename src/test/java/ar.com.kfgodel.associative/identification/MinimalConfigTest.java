@@ -11,9 +11,8 @@ import ar.com.kfgodel.associative.identification.impl.tasks.InterpretationTask;
 import ar.com.kfgodel.associative.objects.UnObjeto;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
+import ar.com.kfgodel.optionals.Optional;
 import org.junit.runner.RunWith;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

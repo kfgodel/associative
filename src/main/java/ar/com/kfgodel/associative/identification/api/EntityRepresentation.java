@@ -1,8 +1,7 @@
 package ar.com.kfgodel.associative.identification.api;
 
 import ar.com.kfgodel.nary.api.Nary;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * This type represents the internal representation of an entity for an associative memory

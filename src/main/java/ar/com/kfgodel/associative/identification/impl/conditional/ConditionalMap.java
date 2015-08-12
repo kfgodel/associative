@@ -1,6 +1,7 @@
 package ar.com.kfgodel.associative.identification.impl.conditional;
 
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
+
 import java.util.function.Predicate;
 
 /**

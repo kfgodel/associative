@@ -5,8 +5,7 @@ import ar.com.kfgodel.associative.identification.api.Identity;
 import ar.com.kfgodel.associative.identification.impl.maps.EntityMap;
 import ar.com.kfgodel.associative.identification.impl.maps.RepresentationMap;
 import ar.com.kfgodel.nary.api.Nary;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * Created by kfgodel on 13/05/15.

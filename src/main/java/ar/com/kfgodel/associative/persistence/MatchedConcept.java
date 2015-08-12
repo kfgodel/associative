@@ -38,6 +38,10 @@ public class MatchedConcept {
         final Set<List<PersistentRelation>> relationOptions = Sets.cartesianProduct(matchingGroups);
         List<ConceptResult> foundResults = new ArrayList<>();
         for (List<PersistentRelation> combinationOption : relationOptions) {
+            if(containsDuplicate(combinationOption)){
+                // A relation may match more than one predicate, but different relations are expected for a result
+                continue;
+            }
             final Optional<Long> commonSource = extractCommonSourceFrom(combinationOption);
             if(!commonSource.isPresent()){
                 // Discard relations that don't belong to same source
@@ -47,6 +51,19 @@ public class MatchedConcept {
             foundResults.add(result);
         }
         return NaryFromNative.create(foundResults.stream());
+    }
+
+    private boolean containsDuplicate(List<PersistentRelation> combinationOption) {
+        // Compare each element
+        for (int i = 0; i < combinationOption.size() - 1; i++) {
+            // with their following elements
+            for (int j = i + 1; j < combinationOption.size(); j++) {
+                if(combinationOption.get(i) == combinationOption.get(j)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Optional<Long> extractCommonSourceFrom(List<PersistentRelation> relations) {

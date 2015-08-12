@@ -1,8 +1,10 @@
 package ar.com.kfgodel.associative.identification.impl.conditional;
 
+import ar.com.kfgodel.nary.impl.NaryFromNative;
+import ar.com.kfgodel.optionals.Optional;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -22,7 +24,7 @@ public class ConditionalMapImpl<K,V> implements ConditionalMap<K,V> {
                 return entry.getValue();
             }
         }
-        return Optional.empty();
+        return NaryFromNative.empty();
     }
 
     @Override
@@ -30,7 +32,7 @@ public class ConditionalMapImpl<K,V> implements ConditionalMap<K,V> {
         if(value == null){
             throw new IllegalArgumentException("We don't support null as value for now");
         }
-        this.bindings.put(condition,Optional.of(value));
+        this.bindings.put(condition, NaryFromNative.of(value));
     }
 
     public static ConditionalMapImpl create() {

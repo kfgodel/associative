@@ -8,11 +8,11 @@ import ar.com.kfgodel.associative.memorization.impl.memories.InterpretationMemor
 import ar.com.kfgodel.associative.persistence.ConceptPredicate;
 import ar.com.kfgodel.associative.persistence.PersistentRelation;
 import ar.com.kfgodel.associative.persistence.RelationPredicate;
+import ar.com.kfgodel.associative.persistence.RestrictedTypeAndDestination;
 import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.api.context.DecomposedContext;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * Created by kfgodel on 01/08/15.
@@ -47,7 +47,7 @@ public class MemorizationTask implements DecomposableTask {
             Optional<RelationRepresentation> relationRepresentation = interpretation.representationOf(conceptRelationIdentity);
             Long restrictedType = memory.identificatorOf(relationRepresentation.get().relationType());
             Long restrictedDestination = memory.identificatorOf(relationRepresentation.get().destination());
-            RelationPredicate relationPredicate = RelationPredicate.create(restrictedType, restrictedDestination);
+            RelationPredicate relationPredicate = RestrictedTypeAndDestination.create(restrictedType, restrictedDestination);
             conceptPredicate.addPredicate(relationPredicate);
         }
         return conceptPredicate;

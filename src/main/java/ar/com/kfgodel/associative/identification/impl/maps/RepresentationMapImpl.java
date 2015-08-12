@@ -5,10 +5,10 @@ import ar.com.kfgodel.associative.identification.api.Identity;
 import ar.com.kfgodel.associative.identification.api.RelationRepresentation;
 import ar.com.kfgodel.nary.api.Nary;
 import ar.com.kfgodel.nary.impl.NaryFromNative;
+import ar.com.kfgodel.optionals.Optional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by kfgodel on 14/05/15.
@@ -24,7 +24,7 @@ public class RepresentationMapImpl implements RepresentationMap {
 
     @Override
     public <R> Optional<R> getInterpretationFor(Identity reference) {
-        Optional optional = Optional.ofNullable(interpretationPerIdentity.get(reference));
+        Optional optional = NaryFromNative.ofNullable(interpretationPerIdentity.get(reference));
         return optional;
     }
 

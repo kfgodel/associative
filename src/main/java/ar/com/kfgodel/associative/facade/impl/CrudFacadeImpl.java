@@ -28,7 +28,7 @@ public class CrudFacadeImpl implements CrudFacade {
 
     @Override
     public <T> Nary<T> retrieveById(Long identificator, Class<T> expectedType) {
-        final ObjectSummoningTask summoningTask = ObjectSummoningTask.create(identificator, expectedType, interpreationConfig);
+        final ObjectSummoningTask summoningTask = ObjectSummoningTask.create(identificator, expectedType, repo, interpreationConfig);
         return DecomposerProcessor.create()
                 .process(summoningTask);
     }

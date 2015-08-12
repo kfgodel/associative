@@ -5,8 +5,7 @@ import ar.com.kfgodel.associative.identification.api.Identity;
 import ar.com.kfgodel.associative.identification.api.config.Analyzer;
 import ar.com.kfgodel.associative.identification.api.config.Synthesizer;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * This type represents a context in which an interpretation happens and holds references

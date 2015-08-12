@@ -14,11 +14,11 @@ import ar.com.kfgodel.associative.objects.OtroObjeto;
 import ar.com.kfgodel.associative.objects.UnObjeto;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
+import ar.com.kfgodel.optionals.Optional;
 import com.google.common.collect.Lists;
 import org.junit.runner.RunWith;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;

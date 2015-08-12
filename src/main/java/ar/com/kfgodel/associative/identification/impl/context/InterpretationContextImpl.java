@@ -16,8 +16,7 @@ import ar.com.kfgodel.associative.identification.impl.maps.EntityMapImpl;
 import ar.com.kfgodel.associative.identification.impl.maps.RepresentationMap;
 import ar.com.kfgodel.associative.identification.impl.maps.RepresentationMapImpl;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
-
-import java.util.Optional;
+import ar.com.kfgodel.optionals.Optional;
 
 /**
  * This type is the actual implementation of an interpretation context
