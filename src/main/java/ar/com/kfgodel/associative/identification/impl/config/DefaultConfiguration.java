@@ -10,6 +10,8 @@ import ar.com.kfgodel.associative.identification.impl.synthesizer.BoundFieldSynt
 import ar.com.kfgodel.associative.identification.impl.synthesizer.UnknownTypeSynthesizer;
 import ar.com.kfgodel.diamond.api.fields.BoundField;
 
+import java.util.Objects;
+
 /**
  * Created by kfgodel on 13/05/15.
  */
@@ -26,6 +28,7 @@ public class DefaultConfiguration extends ConfigurationSupport {
     protected void initialize() {
         super.initialize();
         this.interpreters().bind(UninterpretableRepresentation.class::isInstance, UninterpretableIntepreter.create());
+        this.interpreters().bind(Objects::isNull, UninterpretableIntepreter.create());
         this.interpreters().bind(String.class::isInstance, PerceptInterpreter.create());
         this.interpreters().bind(Object.class::isInstance, ConceptInterpreter.create());
 

@@ -8,6 +8,7 @@ import ar.com.kfgodel.associative.identification.api.Identity;
  * Created by kfgodel on 01/08/15.
  */
 public interface InterpretationMemory {
+
     EntityRepresentation getInterpretation();
 
     /**

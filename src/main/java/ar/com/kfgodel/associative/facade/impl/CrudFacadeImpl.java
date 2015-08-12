@@ -4,6 +4,7 @@ import ar.com.kfgodel.associative.facade.api.CrudFacade;
 import ar.com.kfgodel.associative.identification.api.config.InterpretationConfiguration;
 import ar.com.kfgodel.associative.identification.impl.config.DefaultConfiguration;
 import ar.com.kfgodel.associative.memorization.impl.tasks.MemoryCreationTask;
+import ar.com.kfgodel.associative.memorization.impl.tasks.ObjectSummoningTask;
 import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
 import ar.com.kfgodel.associative.persistence.impl.magi.MagiRepoImpl;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
@@ -27,7 +28,9 @@ public class CrudFacadeImpl implements CrudFacade {
 
     @Override
     public <T> Nary<T> retrieveById(Long identificator, Class<T> expectedType) {
-        return null;
+        final ObjectSummoningTask summoningTask = ObjectSummoningTask.create(identificator, expectedType, interpreationConfig);
+        return DecomposerProcessor.create()
+                .process(summoningTask);
     }
 
     @Override

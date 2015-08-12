@@ -214,6 +214,14 @@ of a fixed location is recommended. -->
       <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
+    <!-- Concept of n-arity -->
+    <dependency>
+      <groupId>ar.com.kfgodel</groupId>
+      <artifactId>nary</artifactId>
+      <version>1.0.1-SNAPSHOT</version>
+    </dependency>
+
+
     <!-- Common code -->
     <dependency>
       <groupId>com.google.guava</groupId>

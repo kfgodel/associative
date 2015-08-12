@@ -17,9 +17,9 @@ public interface CrudFacade {
 
     /**
      * Retrieves the persistent state identified by the given identificator, with the structure of the given class
+     * @param <T> The type of the expected object
      * @param identificator The identificator used when the state was created
      * @param expectedType The type that indicates the form of the expected state
-     * @param <T> The type of the expected object
      * @return The object created from the found state and given class, or empty if not found
      */
     <T> Nary<T> retrieveById(Long identificator, Class<T> expectedType);

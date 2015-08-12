@@ -27,6 +27,12 @@ An identity by itself doesn't have value. It's in the relation with others, or i
 The only responsibility of an identity instance is to serve as discriminator with other identities, so they don't
 get confused or mixed. It's only purpose is to serve as a comparable token which can be tell apart from other tokens.
 
+## Identificator
+
+It's the memento of an identity that gives it time continuity. The identificator it's an externalization of the identity
+that has the symbolic power of reference it. So the identificator can be usedd instead of the identity. Allowing the 
+symbolic manipulation of the identificator in the real world, without needing to manipulate the real entity.
+
 ## Percept
 
 This type represents a perception made identity (survives time).  
@@ -73,5 +79,20 @@ entity. This process deconstructs the entity into interpretable parts that form 
 It's the product of the interpretation process, that captures meaningful traits of an entity, expressed in a manner
  that's useful for teh sentient being
 
+## Evocation
+
+The process and the product of recreating a memory. May be from parts of it, or from other entities but the product is 
+a memory recreated from the storage.
+
+## Summoning
+
+The process of creating an entity from its memorized interpretation. The result of the summoning is the object that
+is cognitively equal to the original entity. The object may have differences with the original entity but those could 
+ not be perceived by the subject.
+ 
+## Subject
+The autonomous being that can store memories from entities and has a network of those memories so it can summon
+ objects to match them. The subject has a limited cognitive capacity which makes its memories a poor reflection
+ of the world, but nonetheless useful to its purpose.
 
 
