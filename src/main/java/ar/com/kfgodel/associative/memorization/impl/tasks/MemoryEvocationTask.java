@@ -49,7 +49,7 @@ public class MemoryEvocationTask implements DecomposableTask {
     private void evokePercepts() {
         for (Identity perceptIdentity : representation.percepts()) {
             Optional<Object> percept = representation.representationOf(perceptIdentity);
-            Optional<Long> perceptIdentificator = repo.retrievePercept(percept.get());
+            Optional<Long> perceptIdentificator = repo.retrievePerceptIdentificator(percept.get());
             evokedMemory.assignTo(perceptIdentity, perceptIdentificator.get());
         }
     }

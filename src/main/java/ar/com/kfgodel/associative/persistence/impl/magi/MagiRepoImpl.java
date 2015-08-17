@@ -37,13 +37,18 @@ public class MagiRepoImpl implements MagiRepo {
     }
 
     @Override
-    public Optional<Long> retrievePercept(Object percept) {
+    public Optional<Long> retrievePerceptIdentificator(Object percept) {
         return percepts.getIdentificatorOf(percept);
     }
 
     @Override
     public Nary<ConceptResult> retrieveConcept(ConceptPredicate conceptPredicate) {
         return relations.findConcept(conceptPredicate);
+    }
+
+    @Override
+    public Optional<Object> retrievePerceptById(Long identificator) {
+        return percepts.retrieveById(identificator);
     }
 
     private Long createRelationRecord(PersistentRelation persistentRelation) {

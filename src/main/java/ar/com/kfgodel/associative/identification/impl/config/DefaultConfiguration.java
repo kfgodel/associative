@@ -8,6 +8,7 @@ import ar.com.kfgodel.associative.identification.impl.interpreter.PerceptInterpr
 import ar.com.kfgodel.associative.identification.impl.interpreter.UninterpretableIntepreter;
 import ar.com.kfgodel.associative.identification.impl.synthesizer.BoundFieldSynthesizer;
 import ar.com.kfgodel.associative.identification.impl.synthesizer.UnknownTypeSynthesizer;
+import ar.com.kfgodel.associative.materialization.impl.materializers.PerceptMaterializer;
 import ar.com.kfgodel.diamond.api.fields.BoundField;
 
 import java.util.Objects;
@@ -37,5 +38,8 @@ public class DefaultConfiguration extends ConfigurationSupport {
 
         this.synthesizers().bind(BoundField.class::isInstance, BoundFieldSynthesizer.create());
         this.synthesizers().bind(Object.class::isInstance, UnknownTypeSynthesizer.create());
+
+        this.materializers().bind((definition -> String.class.isAssignableFrom(definition.expectedClass())),
+                PerceptMaterializer.create());
     }
 }

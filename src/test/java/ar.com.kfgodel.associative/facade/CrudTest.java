@@ -37,6 +37,21 @@ public class CrudTest extends JavaSpec<AssociativeTestContext> {
                 assertThat(identificator).isNotNull();
             });
 
+            describe("with a persisted percept", () -> {
+                context().persistedId(() ->
+                        context().facade().create("Hola")
+                );
+                
+                it("can be used to retrieve the percept by identificator",()->{
+                    Long identificator = context().persistedId();
+
+                    Nary<String> persistedState = context().facade().retrieveById(identificator, String.class);
+
+                    assertThat(persistedState.isPresent()).isTrue();
+                    assertThat(persistedState.get()).isEqualTo("Hola");
+                });   
+            });
+
             describe("with a created persistent state", () -> {
 
                 context().persistedId(() -> context().facade().create(context().user()));

@@ -17,7 +17,9 @@ public interface MagiRepo {
 
     Long storeRelation(PersistentRelation persistentRelation);
 
-    Optional<Long> retrievePercept(Object percept);
+    Optional<Long> retrievePerceptIdentificator(Object percept);
 
     Nary<ConceptResult> retrieveConcept(ConceptPredicate conceptPredicate);
+
+    Optional<Object> retrievePerceptById(Long identificator);
 }

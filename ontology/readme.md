@@ -84,9 +84,9 @@ It's the product of the interpretation process, that captures meaningful traits 
 The process and the product of recreating a memory. May be from parts of it, or from other entities but the product is 
 a memory recreated from the storage.
 
-## Summoning
+## Materialization
 
-The process of creating an entity from its memorized interpretation. The result of the summoning is the object that
+The process of creating an entity from its memorized interpretation. The result of the materialization is the object that
 is cognitively equal to the original entity. The object may have differences with the original entity but those could 
  not be perceived by the subject.
  

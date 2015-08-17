@@ -19,4 +19,11 @@ public interface PerceptRepo {
      * @param percept The percept assigned to the identificator
      */
     void persistWith(Long identificator, Object percept);
+
+    /**
+     * Restores the percept persistend with the given identificator
+     * @param identificator The assigned Id for the object
+     * @return The found percept or empty
+     */
+    Optional<Object> retrieveById(Long identificator);
 }

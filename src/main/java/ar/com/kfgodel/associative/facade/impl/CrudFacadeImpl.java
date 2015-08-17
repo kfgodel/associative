@@ -1,12 +1,10 @@
 package ar.com.kfgodel.associative.facade.impl;
 
 import ar.com.kfgodel.associative.facade.api.CrudFacade;
-import ar.com.kfgodel.associative.identification.api.config.InterpretationConfiguration;
 import ar.com.kfgodel.associative.identification.impl.config.DefaultConfiguration;
+import ar.com.kfgodel.associative.materialization.impl.TypeAndIdDefinition;
+import ar.com.kfgodel.associative.materialization.impl.tasks.MaterializationTask;
 import ar.com.kfgodel.associative.memorization.impl.tasks.MemoryCreationTask;
-import ar.com.kfgodel.associative.memorization.impl.tasks.ObjectSummoningTask;
-import ar.com.kfgodel.associative.persistence.api.magi.MagiRepo;
-import ar.com.kfgodel.associative.persistence.impl.magi.MagiRepoImpl;
 import ar.com.kfgodel.decomposer.api.DecomposableTask;
 import ar.com.kfgodel.decomposer.impl.DecomposerProcessor;
 import ar.com.kfgodel.nary.api.Nary;
@@ -16,21 +14,20 @@ import ar.com.kfgodel.nary.api.Nary;
  */
 public class CrudFacadeImpl implements CrudFacade {
 
-    private MagiRepo repo;
-    private InterpretationConfiguration interpreationConfig;
+    private DefaultConfiguration configuration;
 
     @Override
     public Long create(Object entity) {
-        DecomposableTask creationTask = MemoryCreationTask.create(entity, repo, interpreationConfig);
+        DecomposableTask creationTask = MemoryCreationTask.create(entity, configuration.getMagiRepository(), configuration);
         return DecomposerProcessor.create()
                 .process(creationTask);
     }
 
     @Override
     public <T> Nary<T> retrieveById(Long identificator, Class<T> expectedType) {
-        final ObjectSummoningTask summoningTask = ObjectSummoningTask.create(identificator, expectedType, repo, interpreationConfig);
+        MaterializationTask materializationTask = MaterializationTask.create(TypeAndIdDefinition.create(expectedType, identificator), configuration);
         return DecomposerProcessor.create()
-                .process(summoningTask);
+                .process(materializationTask);
     }
 
     @Override
@@ -50,8 +47,7 @@ public class CrudFacadeImpl implements CrudFacade {
 
     public static CrudFacadeImpl create() {
         CrudFacadeImpl crudFacade = new CrudFacadeImpl();
-        crudFacade.repo = MagiRepoImpl.create();
-        crudFacade.interpreationConfig = DefaultConfiguration.create();
+        crudFacade.configuration = DefaultConfiguration.create();
         return crudFacade;
     }
 
